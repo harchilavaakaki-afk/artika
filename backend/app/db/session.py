@@ -5,16 +5,20 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from app.config import settings
 
-connect_args = {}
-if settings.database_url.startswith("sqlite"):
-    connect_args["check_same_thread"] = False
+_is_sqlite = settings.database_url.startswith("sqlite")
 
-engine = create_async_engine(settings.database_url, echo=False, connect_args=connect_args)
+connect_args = {"check_same_thread": False} if _is_sqlite else {}
+engine = create_async_engine(
+    settings.database_url,
+    echo=False,
+    connect_args=connect_args,
+    pool_size=5 if not _is_sqlite else 0,
+    max_overflow=10 if not _is_sqlite else 0,
+)
 async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
-# Enable foreign keys for SQLite
-if settings.database_url.startswith("sqlite"):
+if _is_sqlite:
     @event.listens_for(engine.sync_engine, "connect")
     def set_sqlite_pragma(dbapi_connection, connection_record):
         cursor = dbapi_connection.cursor()

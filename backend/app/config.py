@@ -12,8 +12,8 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # Database (SQLite by default, switch to PostgreSQL when Docker is available)
-    database_url: str = "sqlite+aiosqlite:///./artika.db"
+    # Database
+    database_url: str = "postgresql+asyncpg://neondb_owner:npg_NzxTL9YeGgR0@ep-fancy-poetry-anta8r5h-pooler.us-east-1.aws.neon.tech/neondb?ssl=require"
 
     # JWT
     jwt_secret: str = "change-me-to-a-random-secret-key"
