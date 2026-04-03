@@ -1,0 +1,15 @@
+name: Keep Render Alive
+
+on:
+  schedule:
+    # Every 14 minutes — prevents Render free tier from sleeping
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Ping backend
+        run: curl -sf https://artika.onrender.com/health || echo "Backend waking up..."
