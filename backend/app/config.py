@@ -41,7 +41,12 @@ class Settings(BaseSettings):
     sync_interval_minutes: int = 60
 
     # CORS
-    cors_origins: list[str] = ["http://localhost:5173"]
+    cors_origins: list[str] = [
+        "http://localhost:5173",
+        "https://frontend-rho-five-49.vercel.app",
+        "https://frontend-harchilavaakaki-4949s-projects.vercel.app",
+        "https://frontend-harchilavaakaki-4949-harchilavaakaki-4949s-projects.vercel.app",
+    ]
 
     # Encryption
     fernet_key: str = ""
