@@ -174,7 +174,11 @@ class SyncService:
             return 0
 
         yandex_ids = list(campaign_map.keys())
-        ad_groups = await self.direct.get_ad_groups(yandex_ids)
+        # Batch by 10 to avoid error 4001 (too many IDs)
+        ad_groups = []
+        for i in range(0, len(yandex_ids), 10):
+            batch = await self.direct.get_ad_groups(yandex_ids[i:i+10])
+            ad_groups.extend(batch)
         count = 0
         for ag in ad_groups:
             campaign_internal_id = campaign_map.get(ag["CampaignId"])
@@ -292,7 +296,7 @@ class SyncService:
                 "bounce_rate": float(row.get("BounceRate", 0)) if row.get("BounceRate", "--") != "--" else None,
                 "synced_at": now,
             }
-            filters = {"campaign_id": campaign_internal_id, "date": row["Date"]}
+            filters = {"campaign_id": campaign_internal_id, "date": date.fromisoformat(row["Date"])}
             await _upsert_composite(self.db, DailyStats, filters, values)
             count += 1
 
@@ -323,7 +327,7 @@ class SyncService:
             filters = {
                 "campaign_id": campaign_internal_id,
                 "query_text": row.get("Query", ""),
-                "date": row.get("Date"),
+                "date": date.fromisoformat(row["Date"]) if row.get("Date") else date.today(),
             }
             await _upsert_composite(self.db, SearchQuery, filters, values)
             count += 1
@@ -391,7 +395,7 @@ class SyncService:
                     filters = {
                         "campaign_id": campaign.id,
                         "goal_id": goal.id,
-                        "date": row_date,
+                        "date": date.fromisoformat(row_date),
                     }
                     await _upsert_composite(self.db, Conversion, filters, values)
                     count += 1
