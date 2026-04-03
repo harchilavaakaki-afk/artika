@@ -133,7 +133,7 @@ class SyncService:
         count = 0
         for c in campaigns:
             daily_budget = None
-            if "DailyBudget" in c:
+            if c.get("DailyBudget"):
                 daily_budget = int(c["DailyBudget"].get("Amount", 0)) / 1_000_000
 
             strategy_type = None

@@ -21,7 +21,7 @@ function StatusBadge({ status }: { status: 'connected' | 'pending' | 'not_connec
 
 const staticPlatforms = [
   { icon: '📊', label: 'Яндекс Метрика', to: '/metrika', status: 'connected' as const, metric: '5 896 визитов' },
-  { icon: '🎯', label: 'Яндекс Директ', to: '/direct', status: 'pending' as const, metric: 'Ожидание API' },
+  { icon: '🎯', label: 'Яндекс Директ', to: '/direct', status: 'connected' as const, metric: 'API активен' },
   { icon: '🔍', label: 'Яндекс Вебмастер', to: '/webmaster', status: 'connected' as const, metric: '8 запросов' },
   { icon: '✈️', label: 'Telegram Ads', to: '/telegram', status: 'not_connected' as const, metric: '—' },
   { icon: '📷', label: 'Instagram', to: '/instagram', status: 'not_connected' as const, metric: '—' },

@@ -349,8 +349,6 @@ export default function DirectPage() {
         </button>
       </div>
 
-      <ApiPendingBanner />
-
       {/* Summary KPIs */}
       {allCampaigns.length > 0 && <StatsSummary campaigns={allCampaigns} />}
 
