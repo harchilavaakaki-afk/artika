@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.egg
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node
+node_modules/
+frontend/dist/
+
+# Database
+*.db
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker/data/
+
+# Alembic
+backend/alembic/versions/__pycache__/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Vercel
+.vercel/
+
+# Claude Code
+.claude/
+
+# Design files and media (too large for git)
+падел видное/
+bug-report/
+landing/family-day/videos/
+landing/family-day/imeges/
+fonts/
+dashboard_metrika_march2026.html
+
+# Large file types
+*.MOV
+*.mov
+*.mp4
+*.ai
+*.psd
+*.tif
+*.tiff
