@@ -143,6 +143,9 @@ class SyncService:
                 strategy_type = strategy.get("Search", {}).get("BiddingStrategyType")
                 strategy_params = strategy
 
+            start_date = date.fromisoformat(c["StartDate"]) if c.get("StartDate") else None
+            end_date = date.fromisoformat(c["EndDate"]) if c.get("EndDate") else None
+
             values = {
                 "yandex_id": c["Id"],
                 "name": c.get("Name", ""),
@@ -150,8 +153,8 @@ class SyncService:
                 "status": c.get("Status"),
                 "state": c.get("State"),
                 "daily_budget": daily_budget,
-                "start_date": c.get("StartDate"),
-                "end_date": c.get("EndDate"),
+                "start_date": start_date,
+                "end_date": end_date,
                 "strategy_type": strategy_type,
                 "strategy_params": strategy_params,
                 "synced_at": now,
