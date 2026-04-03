@@ -99,16 +99,21 @@ async def refresh_vk_campaigns():
 
 
 async def refresh_vk_token():
-    """Refresh VK Ads access token every 23 hours using client credentials."""
+    """Refresh VK Ads access token every 23 hours using client credentials.
+
+    Updates settings in memory (immediate effect) and optionally persists
+    to Render env vars via API if RENDER_API_KEY + RENDER_SERVICE_ID are set.
+    """
     if not settings.vk_ads_client_id or not settings.vk_ads_client_secret:
+        logger.info("VK token refresh skipped: no client_id/client_secret")
         return
 
     import httpx
-    from pathlib import Path
+    import os
 
     logger.info("Refreshing VK Ads token...")
     try:
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(timeout=15) as client:
             resp = await client.post(
                 "https://target.my.com/api/v2/oauth2/token.json",
                 data={
@@ -120,21 +125,55 @@ async def refresh_vk_token():
             resp.raise_for_status()
             data = resp.json()
             new_token = data.get("access_token")
-            if new_token:
+            if not new_token:
+                logger.error("VK token refresh: no access_token in response: %s", data)
+                return
+
+            # 1. Update settings in memory (current process, immediate effect)
+            settings.vk_ads_access_token = new_token
+            logger.info("VK Ads token updated in memory")
+
+            # 2. Persist to Render env var (survives restarts)
+            render_api_key = os.environ.get("RENDER_API_KEY", "")
+            render_service_id = os.environ.get("RENDER_SERVICE_ID", "")
+            if render_api_key and render_service_id:
+                try:
+                    r = await client.put(
+                        f"https://api.render.com/v1/services/{render_service_id}/env-vars",
+                        headers={"Authorization": f"Bearer {render_api_key}", "Content-Type": "application/json"},
+                        json=[{"key": "VK_ADS_ACCESS_TOKEN", "value": new_token}],
+                    )
+                    if r.status_code in (200, 201):
+                        logger.info("VK token persisted to Render env vars")
+                    else:
+                        logger.warning("Render env update failed: %s %s", r.status_code, r.text[:200])
+                except Exception as e:
+                    logger.warning("Could not update Render env var: %s", e)
+
+            # 3. Update local .env as fallback
+            try:
+                from pathlib import Path
                 env_path = Path(__file__).resolve().parent.parent.parent / ".env"
-                content = env_path.read_text(encoding="utf-8")
-                lines = [
-                    f"VK_ADS_ACCESS_TOKEN={new_token}" if l.startswith("VK_ADS_ACCESS_TOKEN=") else l
-                    for l in content.splitlines()
-                ]
-                env_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-                logger.info("VK Ads token refreshed successfully")
+                if env_path.exists():
+                    content = env_path.read_text(encoding="utf-8")
+                    lines = [
+                        f"VK_ADS_ACCESS_TOKEN={new_token}" if l.startswith("VK_ADS_ACCESS_TOKEN=") else l
+                        for l in content.splitlines()
+                    ]
+                    env_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            except Exception:
+                pass
+
+            logger.info("VK Ads token refresh complete")
     except Exception:
         logger.exception("Failed to refresh VK Ads token")
 
 
 def start_scheduler():
     """Register jobs and start the scheduler."""
+    from apscheduler.triggers.date import DateTrigger
+    from datetime import datetime, timedelta
+
     scheduler.add_job(
         sync_all_data,
         trigger=IntervalTrigger(minutes=settings.sync_interval_minutes),
@@ -145,6 +184,13 @@ def start_scheduler():
         refresh_vk_token,
         trigger=IntervalTrigger(hours=23),
         id="refresh_vk_token",
+        replace_existing=True,
+    )
+    # Run VK token refresh immediately on startup (token may be expired)
+    scheduler.add_job(
+        refresh_vk_token,
+        trigger=DateTrigger(run_date=datetime.now() + timedelta(seconds=5)),
+        id="refresh_vk_token_startup",
         replace_existing=True,
     )
     scheduler.add_job(
