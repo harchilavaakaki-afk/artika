@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 class CampaignResponse(BaseModel):
     id: int
-    yandex_id: int
+    yandex_id: int | None = None
     name: str
     type: str | None = None
     status: str | None = None
@@ -16,6 +16,8 @@ class CampaignResponse(BaseModel):
     end_date: date | None = None
     strategy_type: str | None = None
     synced_at: datetime | None = None
+    project_id: int | None = None
+    platform: str | None = None
 
     model_config = {"from_attributes": True}
 
