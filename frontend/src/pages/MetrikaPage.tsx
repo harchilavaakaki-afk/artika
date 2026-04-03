@@ -117,7 +117,7 @@ function OverviewTab({ counterId, dateFrom, dateTo }: { counterId: number; dateF
                     cx="50%"
                     cy="50%"
                     outerRadius={65}
-                    label={({ source, percent }) => `${sourceLabels[source] ?? source} ${(percent * 100).toFixed(0)}%`}
+                    label={({ source, percent }: any) => `${sourceLabels[source] ?? source} ${((percent ?? 0) * 100).toFixed(0)}%`}
                     labelLine={false}
                     fontSize={10}
                   >
@@ -127,7 +127,7 @@ function OverviewTab({ counterId, dateFrom, dateTo }: { counterId: number; dateF
                   </Pie>
                   <Tooltip
                     contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, fontSize: 12 }}
-                    formatter={(v: number, name: string) => [v.toLocaleString('ru-RU'), sourceLabels[name] ?? name]}
+                    formatter={(v, name) => [Number(v).toLocaleString('ru-RU'), sourceLabels[String(name)] ?? String(name)]}
                   />
                 </PieChart>
               </ResponsiveContainer>

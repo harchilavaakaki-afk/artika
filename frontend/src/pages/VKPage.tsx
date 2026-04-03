@@ -651,7 +651,7 @@ export default function VKPage() {
 
           {/* Stats tab */}
           {mainTab === 'stats' && (
-            statsLoading ? <LoadingSpinner />
+            statusLoading ? <LoadingSpinner />
             : chartData.length === 0 ? (
               <div className="bg-slate-800 border border-slate-700 rounded-xl p-10 text-center">
                 <AlertTriangle size={32} className="text-yellow-500 mx-auto mb-3" />
@@ -681,7 +681,7 @@ export default function VKPage() {
                       <XAxis dataKey="date" stroke="#475569" fontSize={10} tickFormatter={d => d.slice(5)} />
                       <YAxis stroke="#475569" fontSize={10} width={50} />
                       <Tooltip contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, fontSize: 12 }}
-                        formatter={(v: number) => [`${v.toLocaleString('ru-RU')} ₽`, 'Расход']} />
+                        formatter={(v) => [`${Number(v).toLocaleString('ru-RU')} ₽`, 'Расход']} />
                       <Bar dataKey="spent" fill="#f59e0b" radius={[3, 3, 0, 0]} name="Расход" />
                     </BarChart>
                   </ResponsiveContainer>

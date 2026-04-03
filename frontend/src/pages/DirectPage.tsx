@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   Target, Clock, Play, Pause, Plus, ChevronRight, ChevronDown,
@@ -63,7 +63,7 @@ function StatusBadge({ status }: { status: string }) {
 
 // ─── Campaign row ─────────────────────────────────────────────────────────────
 
-function CampaignRow({ campaign, projectName, projects }: { campaign: Campaign; projectName?: string; projects: any[] }) {
+function CampaignRow({ campaign, projectName }: { campaign: Campaign; projectName?: string }) {
   const [open, setOpen] = useState(false)
   const qc = useQueryClient()
 
@@ -72,12 +72,6 @@ function CampaignRow({ campaign, projectName, projects }: { campaign: Campaign; 
       api.patch(`/campaigns/${campaign.id}`, {
         status: ['STOPPED', 'paused', 'PAUSED', 'OFF'].includes(campaign.status) ? 'ON' : 'OFF'
       }).then(r => r.data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['directCampaigns'] }),
-  })
-
-  const assignProjectMutation = useMutation({
-    mutationFn: (project_id: number | null) =>
-      api.patch(`/campaigns/${campaign.id}`, { project_id }).then(r => r.data),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['directCampaigns'] }),
   })
 
@@ -116,31 +110,18 @@ function CampaignRow({ campaign, projectName, projects }: { campaign: Campaign; 
           {campaign.cpc ? `${campaign.cpc} ₽` : '—'}
         </td>
         <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
-          <div className="flex items-center gap-2">
-            <select
-              value={campaign.project_id ?? ''}
-              onChange={e => assignProjectMutation.mutate(e.target.value ? Number(e.target.value) : null)}
-              className="bg-slate-700 border border-slate-600 text-slate-300 text-xs rounded px-2 py-1 focus:outline-none max-w-32"
-              title="Назначить проект"
-            >
-              <option value="">— проект</option>
-              {projects.map((p: any) => (
-                <option key={p.id} value={p.id}>{p.name}</option>
-              ))}
-            </select>
-            <button
-              onClick={() => toggleMutation.mutate()}
-              disabled={toggleMutation.isPending}
-              title={isActive ? 'Остановить' : 'Запустить'}
-              className={`p-1.5 rounded transition-colors ${
-                isActive
-                  ? 'text-green-400 hover:bg-green-400/10'
-                  : 'text-slate-500 hover:bg-slate-600 hover:text-slate-300'
-              }`}
-            >
-              {isActive ? <Pause size={14} /> : <Play size={14} />}
-            </button>
-          </div>
+          <button
+            onClick={() => toggleMutation.mutate()}
+            disabled={toggleMutation.isPending}
+            title={isActive ? 'Остановить' : 'Запустить'}
+            className={`p-1.5 rounded transition-colors ${
+              isActive
+                ? 'text-green-400 hover:bg-green-400/10'
+                : 'text-slate-500 hover:bg-slate-600 hover:text-slate-300'
+            }`}
+          >
+            {isActive ? <Pause size={14} /> : <Play size={14} />}
+          </button>
         </td>
       </tr>
       {open && (
@@ -325,6 +306,7 @@ export default function DirectPage() {
   const [filterStatus, setFilterStatus] = useState('all')
   const [filterProject, setFilterProject] = useState<number | 'all'>('all')
   const [showCreate, setShowCreate] = useState(false)
+  const qc = useQueryClient()
 
   const { data: projects, isLoading: projectsLoading } = useQuery({
     queryKey: ['projects'],
@@ -336,7 +318,19 @@ export default function DirectPage() {
     queryFn: () => api.get('/campaigns', { params: { limit: 200 } }).then(r => r.data),
   })
 
+  const autoAssignMutation = useMutation({
+    mutationFn: () => api.post('/campaigns/auto-assign').then(r => r.data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['directCampaigns'] }),
+  })
+
+  // Auto-assign on first load if any campaigns are unassigned
   const allCampaigns: Campaign[] = campaignsData?.campaigns || []
+  useEffect(() => {
+    if (allCampaigns.length > 0 && allCampaigns.some(c => !c.project_id)) {
+      autoAssignMutation.mutate()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [campaignsData])
 
   const filtered = allCampaigns.filter(c => {
     if (filterStatus !== 'all' && c.status !== filterStatus) return false
@@ -360,12 +354,21 @@ export default function DirectPage() {
             <span className="text-sm text-slate-500">({allCampaigns.length} кампаний)</span>
           )}
         </div>
-        <button
-          onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-sm rounded-lg transition-colors"
-        >
-          <Plus size={14} /> Новая кампания
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => autoAssignMutation.mutate()}
+            disabled={autoAssignMutation.isPending}
+            className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-slate-300 text-sm rounded-lg transition-colors"
+          >
+            {autoAssignMutation.isPending ? '⏳' : '🔀'} Авто-распределить
+          </button>
+          <button
+            onClick={() => setShowCreate(true)}
+            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-sm rounded-lg transition-colors"
+          >
+            <Plus size={14} /> Новая кампания
+          </button>
+        </div>
       </div>
 
       {/* Summary KPIs */}
@@ -442,7 +445,7 @@ export default function DirectPage() {
               </thead>
               <tbody>
                 {filtered.map(c => (
-                  <CampaignRow key={c.id} campaign={c} projectName={projectMap[c.project_id || 0]} projects={projects || []} />
+                  <CampaignRow key={c.id} campaign={c} projectName={projectMap[c.project_id || 0]} />
                 ))}
               </tbody>
             </table>
