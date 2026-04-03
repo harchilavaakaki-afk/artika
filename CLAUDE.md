@@ -1,5 +1,53 @@
 # Artika — AI Marketing Analytics Platform
 
+## Старт сессии
+При начале каждой сессии Claude ОБЯЗАН сразу:
+1. Залогиниться в бэкенд (`POST https://artika.onrender.com/api/v1/auth/login`)
+2. Получить проекты + задачи + кампании
+3. Показать короткую сводку пользователю
+4. Спросить "Что делаем?"
+
+Пользователь может написать **"статус"** — Claude покажет текущее состояние всех проектов.
+
+## Работа с любого устройства (дом / офис / телефон)
+
+### Приложение уже в продакшне:
+- **Фронтенд**: https://frontend-rho-five-49.vercel.app
+- **Бэкенд API**: https://artika.onrender.com
+- **Логин**: admin@artika.ru / admin123
+
+### Если пользователь написал **"приложение"**:
+Claude открывает https://frontend-rho-five-49.vercel.app и показывает статус.
+
+### Настройка на новом устройстве (один раз):
+```bash
+# 1. Установить Git и Node.js если нет
+# 2. Клонировать репо
+git clone https://github.com/harchilavaakaki-afk/artika.git
+cd artika
+
+# 3. Установить зависимости фронтенда
+cd frontend && npm install && cd ..
+
+# 4. Установить зависимости бэкенда
+cd backend && python -m venv .venv && .venv/Scripts/pip install -r requirements.txt && cd ..
+```
+
+### Запуск локально (если нужна разработка):
+```bash
+# Бэкенд (терминал 1)
+cd backend && .venv/Scripts/uvicorn.exe app.main:app --host 0.0.0.0 --port 8000 --reload
+
+# Фронтенд (терминал 2)
+cd frontend && npm run dev
+```
+
+### Деплой изменений:
+```bash
+git add -A && git commit -m "описание" && git push
+# Render и Vercel подхватывают автоматически
+```
+
 ## Что это
 Система аналитики и автоматизации рекламы для нескольких сайтов/проектов.
 Стек: FastAPI + SQLite + React + TypeScript.
