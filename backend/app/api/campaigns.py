@@ -33,6 +33,7 @@ class CampaignPatch(BaseModel):
     status: str | None = None
     daily_budget: float | None = None
     name: str | None = None
+    project_id: int | None = None
 
 
 @router.get("", response_model=CampaignListResponse)
@@ -152,6 +153,8 @@ async def patch_campaign(
         campaign.daily_budget = body.daily_budget
     if body.name is not None:
         campaign.name = body.name
+    if body.project_id is not None:
+        campaign.project_id = body.project_id
     await db.commit()
     await db.refresh(campaign)
     return campaign

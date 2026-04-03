@@ -63,7 +63,7 @@ function StatusBadge({ status }: { status: string }) {
 
 // ─── Campaign row ─────────────────────────────────────────────────────────────
 
-function CampaignRow({ campaign, projectName }: { campaign: Campaign; projectName?: string }) {
+function CampaignRow({ campaign, projectName, projects }: { campaign: Campaign; projectName?: string; projects: any[] }) {
   const [open, setOpen] = useState(false)
   const qc = useQueryClient()
 
@@ -72,6 +72,12 @@ function CampaignRow({ campaign, projectName }: { campaign: Campaign; projectNam
       api.patch(`/campaigns/${campaign.id}`, {
         status: ['STOPPED', 'paused', 'PAUSED', 'OFF'].includes(campaign.status) ? 'ON' : 'OFF'
       }).then(r => r.data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['directCampaigns'] }),
+  })
+
+  const assignProjectMutation = useMutation({
+    mutationFn: (project_id: number | null) =>
+      api.patch(`/campaigns/${campaign.id}`, { project_id }).then(r => r.data),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['directCampaigns'] }),
   })
 
@@ -110,18 +116,31 @@ function CampaignRow({ campaign, projectName }: { campaign: Campaign; projectNam
           {campaign.cpc ? `${campaign.cpc} ₽` : '—'}
         </td>
         <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
-          <button
-            onClick={() => toggleMutation.mutate()}
-            disabled={toggleMutation.isPending}
-            title={isActive ? 'Остановить' : 'Запустить'}
-            className={`p-1.5 rounded transition-colors ${
-              isActive
-                ? 'text-green-400 hover:bg-green-400/10'
-                : 'text-slate-500 hover:bg-slate-600 hover:text-slate-300'
-            }`}
-          >
-            {isActive ? <Pause size={14} /> : <Play size={14} />}
-          </button>
+          <div className="flex items-center gap-2">
+            <select
+              value={campaign.project_id ?? ''}
+              onChange={e => assignProjectMutation.mutate(e.target.value ? Number(e.target.value) : null)}
+              className="bg-slate-700 border border-slate-600 text-slate-300 text-xs rounded px-2 py-1 focus:outline-none max-w-32"
+              title="Назначить проект"
+            >
+              <option value="">— проект</option>
+              {projects.map((p: any) => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+            <button
+              onClick={() => toggleMutation.mutate()}
+              disabled={toggleMutation.isPending}
+              title={isActive ? 'Остановить' : 'Запустить'}
+              className={`p-1.5 rounded transition-colors ${
+                isActive
+                  ? 'text-green-400 hover:bg-green-400/10'
+                  : 'text-slate-500 hover:bg-slate-600 hover:text-slate-300'
+              }`}
+            >
+              {isActive ? <Pause size={14} /> : <Play size={14} />}
+            </button>
+          </div>
         </td>
       </tr>
       {open && (
@@ -423,7 +442,7 @@ export default function DirectPage() {
               </thead>
               <tbody>
                 {filtered.map(c => (
-                  <CampaignRow key={c.id} campaign={c} projectName={projectMap[c.project_id || 0]} />
+                  <CampaignRow key={c.id} campaign={c} projectName={projectMap[c.project_id || 0]} projects={projects || []} />
                 ))}
               </tbody>
             </table>
