@@ -81,6 +81,7 @@ class SyncService:
         if self.direct:
             try:
                 report["campaigns"] = await self.sync_campaigns()
+                report["auto_assigned"] = await self.auto_assign_campaigns()
                 report["ad_groups"] = await self.sync_ad_groups()
                 report["ads"] = await self.sync_ads()
                 report["keywords"] = await self.sync_keywords()
@@ -124,6 +125,51 @@ class SyncService:
         if errors:
             report["errors"] = errors
         return report
+
+    # --- Auto-assign campaigns to projects ---
+
+    async def auto_assign_campaigns(self) -> int:
+        """Match campaigns to projects by keyword scoring (domain + name parts).
+        Only assigns campaigns that currently have project_id=None.
+        """
+        projects = (await self.db.execute(select(Project))).scalars().all()
+        if not projects:
+            return 0
+
+        # Build list of (keyword, project_id, weight)  — longer = more specific
+        scored: list[tuple[str, int, int]] = []
+        for p in projects:
+            # From domain: strip TLD, split by dots/hyphens
+            if p.domain:
+                base = p.domain.rsplit('.', 1)[0]  # remove .ru
+                for part in base.replace('-', '.').split('.'):
+                    if len(part) > 2 and part not in ('www',):
+                        scored.append((part.lower(), p.id, len(part)))
+            # From project name: split by spaces
+            for word in p.name.lower().split():
+                if len(word) > 2:
+                    scored.append((word, p.id, len(word)))
+
+        # Longest keyword first → most specific wins
+        scored.sort(key=lambda x: -x[2])
+
+        result = await self.db.execute(
+            select(Campaign).where(Campaign.project_id == None)  # noqa: E711
+        )
+        unassigned = result.scalars().all()
+
+        assigned = 0
+        for campaign in unassigned:
+            name_lower = campaign.name.lower()
+            for keyword, project_id, _ in scored:
+                if keyword in name_lower:
+                    campaign.project_id = project_id
+                    assigned += 1
+                    break
+
+        await self.db.commit()
+        logger.info("Auto-assigned %d campaigns to projects", assigned)
+        return assigned
 
     # --- Yandex Direct ---
 

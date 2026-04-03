@@ -175,6 +175,18 @@ async def get_campaign_keywords(
     return result.scalars().all()
 
 
+@router.post("/auto-assign")
+async def auto_assign_campaigns(
+    db: AsyncSession = Depends(get_db),
+    _user: User = Depends(get_current_user),
+):
+    """Auto-assign campaigns to projects based on keyword matching."""
+    from app.services.sync_service import SyncService
+    svc = SyncService(db=db)
+    assigned = await svc.auto_assign_campaigns()
+    return {"assigned": assigned}
+
+
 # ─── Standalone ad-groups router ──────────────────────────────────────────────
 
 @ad_groups_router.get("")
