@@ -187,6 +187,23 @@ async def auto_assign_campaigns(
     return {"assigned": assigned}
 
 
+@router.delete("/unassigned")
+async def delete_unassigned_campaigns(
+    db: AsyncSession = Depends(get_db),
+    _user: User = Depends(get_current_user),
+):
+    """Delete all campaigns that have no project assigned."""
+    result = await db.execute(
+        select(Campaign).where(Campaign.project_id == None)  # noqa: E711
+    )
+    unassigned = result.scalars().all()
+    count = len(unassigned)
+    for c in unassigned:
+        await db.delete(c)
+    await db.commit()
+    return {"deleted": count}
+
+
 # ─── Standalone ad-groups router ──────────────────────────────────────────────
 
 @ad_groups_router.get("")
