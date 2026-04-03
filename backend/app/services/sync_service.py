@@ -102,7 +102,7 @@ class SyncService:
                 logger.warning("Metrika sync failed: %s", e)
                 errors.append(f"Metrika: {e}")
 
-        if self.webmaster and self.webmaster_user_id and self.webmaster_host_id:
+        if self.webmaster and self.webmaster_user_id:
             try:
                 report["webmaster_queries"] = await self.sync_webmaster_queries(days_back=30)
                 logger.info("Webmaster sync complete: queries=%s", report.get("webmaster_queries"))
@@ -459,49 +459,60 @@ class SyncService:
     # --- Yandex Webmaster ---
 
     async def sync_webmaster_queries(self, days_back: int = 30) -> int:
-        if not self.webmaster or not self.webmaster_user_id or not self.webmaster_host_id:
+        """Sync webmaster queries for ALL projects that have webmaster_host_id."""
+        if not self.webmaster or not self.webmaster_user_id:
             return 0
 
-        # Find project by webmaster_host_id
-        project_result = await self.db.execute(
-            select(Project).where(Project.webmaster_host_id == self.webmaster_host_id)
+        # Get all projects with webmaster_host_id
+        result = await self.db.execute(
+            select(Project).where(Project.webmaster_host_id != None)  # noqa: E711
         )
-        project = project_result.scalar_one_or_none()
-        project_id = project.id if project else None
+        projects = result.scalars().all()
+        if not projects:
+            return 0
 
         today = date.today()
         date_from = today - timedelta(days=days_back)
-
-        data = await self.webmaster.get_popular_queries(
-            user_id=self.webmaster_user_id,
-            host_id=self.webmaster_host_id,
-            date_from=date_from.isoformat(),
-            date_to=today.isoformat(),
-        )
-
         now = datetime.now(timezone.utc)
-        count = 0
-        for q in data.get("queries", []):
-            query_text = q.get("query_text", "")
-            indicators = q.get("indicators", {})
-            values = {
-                "impressions": int(indicators.get("TOTAL_SHOWS", 0)),
-                "clicks": int(indicators.get("TOTAL_CLICKS", 0)),
-                "ctr": float(indicators.get("AVG_CLICK_POSITION", 0)),
-                "position": float(indicators.get("AVG_SHOW_POSITION", 0)),
-                "project_id": project_id,
-                "synced_at": now,
-            }
-            filters = {
-                "query_text": query_text,
-                "date": today,
-                "device_type": "ALL",
-            }
-            await _upsert_composite(self.db, WebmasterQuery, filters, values)
-            count += 1
+        total_count = 0
+
+        for project in projects:
+            host_id = project.webmaster_host_id
+            try:
+                data = await self.webmaster.get_popular_queries(
+                    user_id=self.webmaster_user_id,
+                    host_id=host_id,
+                    date_from=date_from.isoformat(),
+                    date_to=today.isoformat(),
+                )
+            except Exception as e:
+                logger.warning("Webmaster queries failed for %s (%s): %s", project.name, host_id, e)
+                continue
+
+            for q in data.get("queries", []):
+                query_text = q.get("query_text", "")
+                indicators = q.get("indicators", {})
+                values = {
+                    "impressions": int(indicators.get("TOTAL_SHOWS", 0)),
+                    "clicks": int(indicators.get("TOTAL_CLICKS", 0)),
+                    "ctr": float(indicators.get("AVG_CLICK_POSITION", 0)),
+                    "position": float(indicators.get("AVG_SHOW_POSITION", 0)),
+                    "project_id": project.id,
+                    "synced_at": now,
+                }
+                filters = {
+                    "query_text": query_text,
+                    "date": today,
+                    "device_type": "ALL",
+                    "project_id": project.id,
+                }
+                await _upsert_composite(self.db, WebmasterQuery, filters, values)
+                total_count += 1
+
+            logger.info("Webmaster: %s — %d queries", project.name, len(data.get("queries", [])))
 
         await self.db.commit()
-        return count
+        return total_count
 
     # --- VK Ads (myTarget) ---
 
