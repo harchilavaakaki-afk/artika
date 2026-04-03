@@ -1,0 +1,66 @@
+name: Daily Sync & Report
+
+on:
+  schedule:
+    # Every day at 6:00 UTC (9:00 Moscow)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Wake Render & trigger sync
+        run: |
+          echo "=== Waking Render ==="
+          for i in 1 2 3; do
+            STATUS=$(curl -sf -o /dev/null -w "%{http_code}" https://artika.onrender.com/health) && break
+            echo "Attempt $i: $STATUS - waiting..."
+            sleep 30
+          done
+          echo "Backend alive"
+
+          echo "=== Login ==="
+          TOKEN=$(curl -sf -X POST "https://artika.onrender.com/api/v1/auth/login" \
+            -H "Content-Type: application/json" \
+            -d '{"email":"admin@artika.ru","password":"admin123"}' \
+            | python3 -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
+
+          echo "=== Trigger sync ==="
+          curl -sf -X POST "https://artika.onrender.com/api/v1/sync/trigger?days_back=7" \
+            -H "Authorization: Bearer $TOKEN"
+
+          echo ""
+          echo "=== Wait for sync ==="
+          for i in $(seq 1 20); do
+            sleep 15
+            RESULT=$(curl -sf "https://artika.onrender.com/api/v1/sync/status" \
+              -H "Authorization: Bearer $TOKEN")
+            RUNNING=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('running',False))")
+            if [ "$RUNNING" = "False" ]; then
+              echo "Sync complete!"
+              echo "$RESULT" | python3 -c "
+          import sys,json
+          d = json.load(sys.stdin)
+          r = d.get('last_result',{}).get('report',{})
+          print(f'  Campaigns: {r.get(\"campaigns\",\"?\")}')
+          print(f'  Auto-assigned: {r.get(\"auto_assigned\",\"?\")}')
+          print(f'  Ad groups: {r.get(\"ad_groups\",\"?\")}')
+          print(f'  Webmaster: {r.get(\"webmaster_queries\",\"?\")}')
+          errs = r.get('errors',[])
+          if errs: print(f'  Errors: {\", \".join(errs)}')
+          "
+              break
+            fi
+            echo "  Still syncing... ($i)"
+          done
+
+          echo "=== Campaigns ==="
+          curl -sf "https://artika.onrender.com/api/v1/campaigns?per_page=5" \
+            -H "Authorization: Bearer $TOKEN" \
+            | python3 -c "
+          import sys,json
+          d = json.load(sys.stdin)
+          print(f'Total: {d[\"total\"]}')
+          "
