@@ -133,3 +133,17 @@ app.include_router(vk_oauth_router)
 @app.get("/health")
 async def health():
     return {"status": "ok", "version": "0.1.0"}
+
+
+@app.post("/admin/reset-projects")
+async def reset_projects():
+    """One-time reset: delete all projects/tasks and seed Падел Центр Видное only."""
+    from app.models.project import Project
+    from app.models.project_task import ProjectTask
+    from sqlalchemy import delete as sa_delete
+    async with async_session() as db:
+        await db.execute(sa_delete(ProjectTask))
+        await db.execute(sa_delete(Project))
+        await db.commit()
+        await _seed_initial_data(db)
+    return {"status": "ok", "message": "Reset to Падел Центр Видное"}
