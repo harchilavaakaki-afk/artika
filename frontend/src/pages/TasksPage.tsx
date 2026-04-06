@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   CheckCircle2,
@@ -185,9 +185,11 @@ export default function TasksPage() {
   }, {})
 
   // Auto-select first project
-  if (projects?.length && !projectId) {
-    setProjectId(projects[0].id)
-  }
+  useEffect(() => {
+    if (projects?.length && !projectId) {
+      setProjectId(projects[0].id)
+    }
+  }, [projects, projectId])
 
   return (
     <div className="space-y-6">
