@@ -189,7 +189,7 @@ export default function TasksPage() {
     if (projects?.length && !projectId) {
       setProjectId(projects[0].id)
     }
-  }, [projects, projectId])
+  }, [projects])
 
   return (
     <div className="space-y-6">
@@ -199,10 +199,11 @@ export default function TasksPage() {
         <div className="flex items-center gap-3">
           {/* Project selector */}
           <select
-            value={projectId || ''}
+            value={projectId ?? ''}
             onChange={(e) => setProjectId(Number(e.target.value))}
             className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
           >
+            {!projects?.length && <option value="">Загрузка...</option>}
             {projects?.map((p) => (
               <option key={p.id} value={p.id}>{p.name}</option>
             ))}
