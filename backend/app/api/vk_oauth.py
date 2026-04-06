@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import settings
 from app.db.session import get_db
 from app.models.api_credential import ApiCredential
+from app.security.encryption import encrypt
 
 router = APIRouter(tags=["VK OAuth"])
 logger = logging.getLogger(__name__)
@@ -43,13 +44,14 @@ def _save_token_to_env(token: str) -> None:
 
 
 async def _save_token_to_db(token: str, db: AsyncSession) -> None:
+    enc = encrypt(token)
     result = await db.execute(select(ApiCredential).where(ApiCredential.service == "VK_ADS"))
     cred = result.scalar_one_or_none()
     if cred:
-        cred.oauth_token = token
+        cred.oauth_token = enc
         cred.is_active = True
     else:
-        cred = ApiCredential(service="VK_ADS", oauth_token=token, is_active=True)
+        cred = ApiCredential(service="VK_ADS", oauth_token=enc, is_active=True)
         db.add(cred)
     await db.commit()
 

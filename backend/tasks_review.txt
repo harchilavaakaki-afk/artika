@@ -1,0 +1,43 @@
+
+=== 9. 2work Partner (2workpartner.ru)
+  (нет задач)
+
+=== 1. y-2work.ru (y-2work.ru)
+  [bug] Настроить Яндекс Директ API | Интеграции | details: 4 items
+  [done] Подключить Яндекс Метрику | Интеграции | details: 2 items
+  [done] Подключить Яндекс Вебмастер | Интеграции | details: 1 items
+  [partial] Подключить VK Реклама | Интеграции | details: 2 items
+  [done] Настроить автосинхронизацию | Система | details: 1 items
+  [done] Задеплоить фронтенд на Vercel | Деплой | details: 1 items
+  [done] Задеплоить бэкенд на Render | Деплой | details: 2 items
+  [done] Система чек-листов по проектам | Фичи | details: 3 items
+  [partial] AI-аналитика (Claude) | Фичи | details: 2 items
+  [todo] Шифрование credentials в БД | Безопасность | details: 2 items
+
+=== 10. y-prk.ru (y-prk.ru)
+  (нет задач)
+
+=== 4. Лента Работа (lentarabotapartner.ru)
+  (нет задач)
+
+=== 5. Мир Кадров (worldofstaff.ru)
+  (нет задач)
+
+=== 6. ПКР Лента (y-prk.ru)
+  (нет задач)
+
+=== 3. ПКР Партнер (pkrpartner.ru)
+  (нет задач)
+
+=== 7. ПКР Самокат (kurierps-samokatpartner.ru)
+  (нет задач)
+
+=== 2. Падел Центр (padelvidnoe.ru)
+  [done] Настроить Яндекс Метрику | Аналитика | details: 1 items
+  [partial] Семейный день 11 апреля | Мероприятия | details: 3 items
+  [partial] Запустить рекламу VK | Реклама | details: 2 items
+  [todo] Настроить ретаргетинг | Реклама | details: 0 items
+  [todo] Анализ ключевых слов | SEO | details: 0 items
+
+=== 8. Туворк Самокат (2workpartner.ru)
+  (нет задач)

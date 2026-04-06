@@ -19,6 +19,7 @@ from app.config import settings
 from app.db.session import get_db
 from app.models.api_credential import ApiCredential
 from app.models.user import User
+from app.security.encryption import decrypt, encrypt
 
 router = APIRouter(prefix="/vk", tags=["VK Реклама"])
 logger = logging.getLogger(__name__)
@@ -33,7 +34,7 @@ async def _get_cookie(db: AsyncSession) -> str | None:
     )
     cred = result.scalar_one_or_none()
     if cred and cred.oauth_token:
-        return cred.oauth_token
+        return decrypt(cred.oauth_token)
     return settings.vk_ads_cookie or None
 
 
@@ -44,7 +45,7 @@ async def _get_token(db: AsyncSession) -> str | None:
     )
     cred = result.scalar_one_or_none()
     if cred and cred.oauth_token:
-        return cred.oauth_token
+        return decrypt(cred.oauth_token)
     return settings.vk_ads_access_token or None
 
 
@@ -127,13 +128,14 @@ async def save_vk_cookie(
     if not cookie:
         raise HTTPException(status_code=400, detail="cookie is required")
 
+    enc_cookie = encrypt(cookie)
     result = await db.execute(select(ApiCredential).where(ApiCredential.service == "VK_ADS_COOKIE"))
     cred = result.scalar_one_or_none()
     if cred:
-        cred.oauth_token = cookie
+        cred.oauth_token = enc_cookie
         cred.is_active = True
     else:
-        cred = ApiCredential(service="VK_ADS_COOKIE", oauth_token=cookie, is_active=True)
+        cred = ApiCredential(service="VK_ADS_COOKIE", oauth_token=enc_cookie, is_active=True)
         db.add(cred)
     await db.commit()
 

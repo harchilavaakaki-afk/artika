@@ -7,6 +7,7 @@ from app.auth.middleware import get_current_user
 from app.db.session import get_db
 from app.models.api_credential import ApiCredential
 from app.models.user import User
+from app.security.encryption import encrypt
 
 router = APIRouter(prefix="/settings", tags=["Настройки"])
 
@@ -65,7 +66,7 @@ async def save_credential(
     existing = result.scalar_one_or_none()
 
     if existing:
-        existing.oauth_token = body.oauth_token  # TODO: encrypt with Fernet
+        existing.oauth_token = encrypt(body.oauth_token)
         existing.client_login = body.client_login
         existing.counter_id = body.counter_id
         existing.host_id = body.host_id
@@ -75,7 +76,7 @@ async def save_credential(
     else:
         cred = ApiCredential(
             service=body.service,
-            oauth_token=body.oauth_token,  # TODO: encrypt with Fernet
+            oauth_token=encrypt(body.oauth_token),
             client_login=body.client_login,
             counter_id=body.counter_id,
             host_id=body.host_id,
