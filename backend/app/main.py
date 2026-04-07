@@ -88,19 +88,11 @@ async def lifespan(app: FastAPI):
             await db.commit()
             logger.info("Default admin user created.")
 
-    # Reset to single project if multiple projects exist (cleanup)
+    # Seed only if no projects exist
     from sqlalchemy import delete as sa_delete
     async with async_session() as db:
         all_projects = (await db.execute(select(Project))).scalars().all()
-        project_names = [p.name for p in all_projects]
-        if len(all_projects) > 1 or (all_projects and all_projects[0].name != "Падел Центр Видное"):
-            logger.info(f"Resetting projects (found: {project_names})...")
-            await db.execute(sa_delete(ProjectTask))
-            await db.execute(sa_delete(Project))
-            await db.commit()
-            await _seed_initial_data(db)
-            logger.info("Projects reset to Падел Центр Видное only.")
-        elif not all_projects:
+        if not all_projects:
             await _seed_initial_data(db)
             logger.info("Initial data seeded.")
 
