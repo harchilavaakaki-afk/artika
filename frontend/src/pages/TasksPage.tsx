@@ -128,7 +128,8 @@ export default function TasksPage() {
   const [modal, setModal] = useState<{ open: boolean; task?: ProjectTask | null }>({ open: false })
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set())
 
-  const { data: projects } = useQuery({ queryKey: ['projects'], queryFn: getProjects })
+  const { data: allProjects } = useQuery({ queryKey: ['projects'], queryFn: getProjects })
+  const projects = allProjects?.filter((p) => !p.name.startsWith('_'))
 
   const { data: tasks, isLoading: tasksLoading } = useQuery({
     queryKey: ['project-tasks', projectId],
