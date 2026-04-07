@@ -100,6 +100,21 @@ async def update_project(
     return project
 
 
+@router.delete("/{project_id}")
+async def delete_project(
+    project_id: int,
+    db: AsyncSession = Depends(get_db),
+    _user: User = Depends(get_current_user),
+):
+    result = await db.execute(select(Project).where(Project.id == project_id))
+    project = result.scalar_one_or_none()
+    if not project:
+        raise HTTPException(status_code=404, detail="Проект не найден")
+    await db.delete(project)
+    await db.commit()
+    return {"status": "ok"}
+
+
 @router.post("/{project_id}/assign-campaigns")
 async def assign_campaigns_to_project(
     project_id: int,
