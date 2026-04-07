@@ -27,7 +27,7 @@ const statusConfig: Record<Status, { icon: typeof CheckCircle2; color: string; b
 const statusCycle: Status[] = ['not_started', 'partial', 'done', 'bug']
 
 function StatusBadge({ status, onClick }: { status: Status; onClick?: () => void }) {
-  const cfg = statusConfig[status]
+  const cfg = statusConfig[status] ?? statusConfig['not_started']
   const Icon = cfg.icon
   return (
     <button
