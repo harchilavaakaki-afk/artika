@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     )
 
     # Database
-    database_url: str = "postgresql+asyncpg://neondb_owner:npg_NzxTL9YeGgR0@ep-fancy-poetry-anta8r5h-pooler.us-east-1.aws.neon.tech/neondb?ssl=require"
+    database_url: str = "postgresql+asyncpg://neondb_owner:npg_NzxTL9YeGgR0@ep-fancy-poetry-anta8r5h-pooler.c-6.us-east-1.aws.neon.tech/neondb?ssl=require"
 
     # JWT
     jwt_secret: str = "change-me-to-a-random-secret-key"
