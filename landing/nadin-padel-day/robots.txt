@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+User-agent: Yandex
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term
+
+Sitemap: https://padelvidnoe.ru/nadin-padel-day/sitemap.xml
+Host: padelvidnoe.ru
