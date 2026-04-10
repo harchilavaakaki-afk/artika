@@ -22,6 +22,7 @@ class Settings(BaseSettings):
 
     # Yandex
     yandex_oauth_token: str = ""
+    yandex_oauth_token_padel: str = "y0__xDn8rLhCBi41T8gzMyChRcwnJjJ5Ag94sE8q1s_RWXdhOtLrzyt7xEKpA"
     yandex_metrika_counter_id: int = 0
     yandex_webmaster_host_id: str = ""
 

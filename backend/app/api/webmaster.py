@@ -16,7 +16,14 @@ router = APIRouter(prefix="/webmaster", tags=["Вебмастер"])
 logger = logging.getLogger(__name__)
 
 
-def _get_client() -> YandexWebmasterClient:
+# host_ids that belong to the padel (artikavidnoe) account
+_PADEL_HOSTS = {"https:padelvidnoe.ru:443"}
+
+
+def _get_client(host_id: str | None = None) -> YandexWebmasterClient:
+    """Get webmaster client, picking the right token based on host_id."""
+    if host_id and host_id in _PADEL_HOSTS and settings.yandex_oauth_token_padel:
+        return YandexWebmasterClient(settings.yandex_oauth_token_padel)
     if not settings.yandex_oauth_token:
         raise HTTPException(status_code=400, detail="Яндекс OAuth токен не настроен")
     return YandexWebmasterClient(settings.yandex_oauth_token)
@@ -61,38 +68,60 @@ async def get_webmaster_queries(
 
 # ─── Live API endpoints ───────────────────────────────────────────────────────
 
+async def _fetch_hosts_from_client(client: YandexWebmasterClient) -> list[dict]:
+    """Fetch hosts with details from a single webmaster client."""
+    user_id = await client.get_user_id()
+    hosts = await client.get_hosts(user_id)
+    result = []
+    for h in hosts:
+        host_id = h.get("host_id", "")
+        try:
+            info = await client.get_host_info(user_id, host_id)
+            summary = await client.get_indexing_stats(user_id, host_id)
+            result.append({
+                "host_id": host_id,
+                "unicode_host_url": h.get("unicode_host_url", host_id),
+                "verified": h.get("verified", False),
+                "iks": info.get("site_quality_score", {}).get("value"),
+                "pages_count": summary.get("SEARCHABLE_PAGES_COUNT"),
+                "in_search_count": summary.get("IN_SEARCH_PAGES_COUNT"),
+                "errors_count": summary.get("ERRORS_COUNT", 0),
+            })
+        except Exception as e:
+            logger.warning("Failed to get info for host %s: %s", host_id, e)
+            result.append({
+                "host_id": host_id,
+                "unicode_host_url": h.get("unicode_host_url", host_id),
+                "verified": h.get("verified", False),
+            })
+    return result
+
+
 @router.get("/hosts")
 async def get_hosts(_user: User = Depends(get_current_user)):
-    """List all verified hosts with summary info."""
-    client = _get_client()
-    try:
-        user_id = await _get_user_id(client)
-        hosts = await client.get_hosts(user_id)
-        result = []
-        for h in hosts:
-            host_id = h.get("host_id", "")
-            try:
-                info = await client.get_host_info(user_id, host_id)
-                summary = await client.get_indexing_stats(user_id, host_id)
-                result.append({
-                    "host_id": host_id,
-                    "unicode_host_url": h.get("unicode_host_url", host_id),
-                    "verified": h.get("verified", False),
-                    "iks": info.get("site_quality_score", {}).get("value"),
-                    "pages_count": summary.get("SEARCHABLE_PAGES_COUNT"),
-                    "in_search_count": summary.get("IN_SEARCH_PAGES_COUNT"),
-                    "errors_count": summary.get("ERRORS_COUNT", 0),
-                })
-            except Exception as e:
-                logger.warning("Failed to get info for host %s: %s", host_id, e)
-                result.append({
-                    "host_id": host_id,
-                    "unicode_host_url": h.get("unicode_host_url", host_id),
-                    "verified": h.get("verified", False),
-                })
-        return result
-    finally:
-        await client.close()
+    """List all verified hosts from all connected accounts."""
+    result = []
+    seen = set()
+
+    for token in [settings.yandex_oauth_token, settings.yandex_oauth_token_padel]:
+        if not token:
+            continue
+        client = YandexWebmasterClient(token)
+        try:
+            hosts = await _fetch_hosts_from_client(client)
+            for h in hosts:
+                if h["host_id"] not in seen:
+                    seen.add(h["host_id"])
+                    result.append(h)
+        except Exception as e:
+            logger.warning("Failed to fetch hosts for token: %s", e)
+        finally:
+            await client.close()
+
+    if not result and not settings.yandex_oauth_token:
+        raise HTTPException(status_code=400, detail="Яндекс OAuth токен не настроен")
+
+    return result
 
 
 @router.get("/hosts/{host_id}/diagnostics")
@@ -101,7 +130,7 @@ async def get_diagnostics(
     _user: User = Depends(get_current_user),
 ):
     """Get site diagnostics and errors."""
-    client = _get_client()
+    client = _get_client(host_id)
     try:
         user_id = await _get_user_id(client)
         return await client.get_diagnostics(user_id, host_id)
@@ -119,7 +148,7 @@ async def get_host_summary(
     _user: User = Depends(get_current_user),
 ):
     """Get indexing summary for a host."""
-    client = _get_client()
+    client = _get_client(host_id)
     try:
         user_id = await _get_user_id(client)
         summary = await client.get_indexing_stats(user_id, host_id)
@@ -139,7 +168,7 @@ async def get_sitemaps(
     _user: User = Depends(get_current_user),
 ):
     """Get submitted sitemaps for a host."""
-    client = _get_client()
+    client = _get_client(host_id)
     try:
         user_id = await _get_user_id(client)
         return await client.get_sitemaps(user_id, host_id)
@@ -162,7 +191,7 @@ async def submit_recrawl(
     _user: User = Depends(get_current_user),
 ):
     """Submit a URL for recrawling by Yandex."""
-    client = _get_client()
+    client = _get_client(body.host_id)
     try:
         user_id = await _get_user_id(client)
         quota = await client.get_recrawl_quota(user_id, body.host_id)
@@ -194,7 +223,7 @@ async def add_sitemap(
     _user: User = Depends(get_current_user),
 ):
     """Submit a sitemap URL."""
-    client = _get_client()
+    client = _get_client(body.host_id)
     try:
         user_id = await _get_user_id(client)
         result = await client.add_sitemap(user_id, body.host_id, body.sitemap_url)
