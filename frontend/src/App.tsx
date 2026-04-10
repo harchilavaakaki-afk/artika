@@ -10,6 +10,7 @@ import CampaignDetailPage from './pages/CampaignDetailPage'
 import KeywordsPage from './pages/KeywordsPage'
 import WebmasterPage from './pages/WebmasterPage'
 import DirectPage from './pages/DirectPage'
+import CalltouchPage from './pages/CalltouchPage'
 import VKPage from './pages/VKPage'
 import TelegramPage from './pages/TelegramPage'
 import InstagramPage from './pages/InstagramPage'
@@ -53,6 +54,7 @@ export default function App() {
             <Route path="/keywords" element={<KeywordsPage />} />
             <Route path="/webmaster" element={<WebmasterPage />} />
             <Route path="/direct" element={<DirectPage />} />
+            <Route path="/calltouch" element={<CalltouchPage />} />
             <Route path="/vk" element={<VKPage />} />
             <Route path="/telegram" element={<TelegramPage />} />
             <Route path="/instagram" element={<InstagramPage />} />

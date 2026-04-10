@@ -11,6 +11,7 @@ import {
   ClipboardList,
   Settings,
   LogOut,
+  Phone,
 } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
 
@@ -19,6 +20,7 @@ const links = [
   { to: '/metrika', icon: BarChart2, label: 'Метрика' },
   { to: '/webmaster', icon: Globe, label: 'Вебмастер' },
   { to: '/direct', icon: Target, label: 'Яндекс Директ' },
+  { to: '/calltouch', icon: Phone, label: 'Calltouch' },
   { to: '/vk', icon: MessageSquare, label: 'VK Реклама' },
   { to: '/telegram', icon: Send, label: 'Telegram' },
   { to: '/instagram', icon: Camera, label: 'Instagram' },

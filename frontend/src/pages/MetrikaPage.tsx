@@ -4,7 +4,7 @@ import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts'
-import { BarChart2, Users, MousePointerClick, Clock, TrendingDown, Monitor, Globe, FileText, Target, Phone, Inbox } from 'lucide-react'
+import { BarChart2, Users, MousePointerClick, Clock, TrendingDown, Monitor, Globe, FileText, Target } from 'lucide-react'
 import { getProjects } from '../api/endpoints'
 import api from '../api/client'
 import LoadingSpinner from '../components/common/LoadingSpinner'
@@ -62,11 +62,6 @@ function OverviewTab({ counterId, dateFrom, dateTo }: { counterId: number; dateF
   const { data: sources, isLoading: sLoading } = useQuery({
     queryKey: ['metrikaSources', counterId, dateFrom, dateTo],
     queryFn: () => api.get('/metrika/sources', { params: { counter_id: counterId, date_from: dateFrom, date_to: dateTo } }).then(r => r.data),
-  })
-
-  const { data: ctData } = useQuery({
-    queryKey: ['calltouchLeads', dateFrom, dateTo],
-    queryFn: () => api.get('/calltouch/leads', { params: { date_from: dateFrom, date_to: dateTo } }).then(r => r.data),
   })
 
   const rows = traffic?.rows || []
@@ -165,32 +160,6 @@ function OverviewTab({ counterId, dateFrom, dateTo }: { counterId: number; dateF
         </div>
       </div>
 
-      {/* Calltouch leads */}
-      {ctData && (
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-5">
-          <h3 className="text-sm font-medium text-slate-300 mb-4 flex items-center gap-2">
-            <Phone size={14} className="text-emerald-400" /> Calltouch — лиды за период
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-emerald-400">{ctData.leads}</div>
-              <div className="text-xs text-slate-500 mt-1">Всего лидов</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400">{ctData.target_calls}</div>
-              <div className="text-xs text-slate-500 mt-1">Целевые звонки</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-slate-300">{ctData.total_calls}</div>
-              <div className="text-xs text-slate-500 mt-1">Всего звонков</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-400">{ctData.requests}</div>
-              <div className="text-xs text-slate-500 mt-1">Заявки с сайта</div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
@@ -494,18 +463,12 @@ export default function MetrikaPage() {
     enabled: !!counterId,
   })
 
-  const { data: ctData } = useQuery({
-    queryKey: ['calltouchLeads', dateFrom, dateTo],
-    queryFn: () => api.get('/calltouch/leads', { params: { date_from: dateFrom, date_to: dateTo } }).then(r => r.data),
-  })
-
   const kpis = [
     { label: 'Визиты', value: summary?.visits?.toLocaleString('ru-RU') ?? '—', icon: <MousePointerClick size={14} />, color: 'text-blue-400' },
     { label: 'Пользователи', value: summary?.users?.toLocaleString('ru-RU') ?? '—', icon: <Users size={14} />, color: 'text-purple-400' },
     { label: 'Отказы', value: summary?.bounce_rate ? `${summary.bounce_rate}%` : '—', icon: <TrendingDown size={14} />, color: summary?.bounce_rate > 50 ? 'text-red-400' : summary?.bounce_rate > 35 ? 'text-yellow-400' : 'text-green-400', sub: 'ниже — лучше' },
     { label: 'Глубина просмотра', value: summary?.page_depth ? `${summary.page_depth} стр.` : '—', icon: <FileText size={14} />, color: 'text-slate-200' },
     { label: 'Время на сайте', value: summary?.avg_duration ? `${Math.floor(summary.avg_duration / 60)}м ${summary.avg_duration % 60}с` : '—', icon: <Clock size={14} />, color: 'text-slate-200' },
-    { label: 'Лиды Calltouch', value: ctData?.leads ?? '—', icon: <Phone size={14} />, color: 'text-emerald-400', sub: ctData ? `${ctData.target_calls} звонков · ${ctData.requests} заявок` : undefined },
   ]
 
   const tabs = [
@@ -566,7 +529,7 @@ export default function MetrikaPage() {
       ) : (
         <>
           {/* KPI strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             {kpis.map(k => (
               summaryLoading
                 ? <div key={k.label} className="bg-slate-800 border border-slate-700 rounded-xl p-4 h-24 animate-pulse" />
