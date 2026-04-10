@@ -12,6 +12,10 @@ venv/
 .env
 .env.local
 
+# Secrets / service accounts
+**/google_sa.json
+**/_config.json
+
 # IDE
 .vscode/
 .idea/
