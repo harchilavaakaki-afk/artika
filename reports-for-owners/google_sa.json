@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "tidal-nova-435410-f3",
+  "private_key_id": "a4c6a3b6be76de883fb16c5610966bc1a070b9b5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDK3rbVLFY0mKEp\nvtvGbIp3A7yXkPvsrmrjlS/fAf6/JpMMtRvOWicZfJX8tduvAKofwRfltrV3m38d\ngX5ZT6fd1w+Cz+qn5wbcqCo4yjNeCjh6gP8e5oZNeEbzwAuNPHwIhoHL80/zoEpm\nCE9YB/JJOn5a7QoyKVfpYKZxAg8O7r5v5v1laFXXcm/++1uNp3+fWRM9uul/jvdG\nUtTr5waDg1iC9TfEL2OaTo9fo7pvmwE3d0DktX0ib1BKd9KUzXiT2Nj+yDTQ3lwK\n/JpWA/mqk4NbygYFvIWvocGQgRxaABxJ3DGZcgtTQi4OP0iZmLeM4cqIvRlffC1K\nEkLq0qTTAgMBAAECggEAPYixT1ar7Tcwhy+HjRemJjRhc128NE2xSUeapht+UC+c\nodmbTguFWZMzEVx9/oaGk6wnmftB7r4hH+uDzgY9ximx4D09kWEfcTWm3OPkEc2q\n1OmkuJQ2v2/QoaWqO1RR0Oovm5O5OA3yEyHJI0wBvxl5cw38LjvhGP5CbfuwYpgY\nK2fqQV7SyvnBtwaqp1IqC3YPLAto0EgTdK1qCZIvhARVKdNtKL4MUw+d4fRhgXcz\nfn5cHqHmHy7rVn/ZP9BTRHMx1e48svaB4ZuDO5o07ILAg1JPnWC3MKsk6RaxbYOL\n/WpoGQvYtui5yWdt5s7ktPNOi8M9Dqdf2tPwyWd/MQKBgQD5Bbvsj60eO1Wlogkg\nCSpU7m/sqoRq7o0oJBSHoCjpWum1uIvqCiwiGnZu4yZ/pc6NG4wwqAiDRWrbdHTl\n1IVAeRS4doJF198FevYXT0KWmfFPEJLcQ8JRcPlQefMfUxFGpZpb056Zbuf3nmxB\ny/dMB3OfEXqQnEe1k/lupbURAwKBgQDQjexuLdmBNiX9UZA6D/0Cv2JxUANgRjzJ\n0x1emRR7DRtoVZXUjz90TXjG9LRAnh6UHYrx/HOh5cLeBR/Bh5dV5rge8lmq7zHF\ndKKCCIVAcGTW1D3+72atNH/KY6R18CvGOG3VV4mXXu2e74Jdwq4kvO3OV6p6DpUH\nTRCSoAuL8QKBgEjHpj7jVwNo8AUysFwOkbK05T1UMNNX2SWMNfvVkV9yVK/pueqz\nAmcNOOP7u3q/KPkQvg5Sbfp/xVVSWf/59t/7A1VOPZDQILxnTZlObvW5FE+5VlLN\n8vL+g79DhQz4qCnvqIeB9+57/YvfX2BzjllILECnSR0Or96f2ty9zYelAoGBAJ8U\ngtIQOyaqbRPrUT5Yz792yNpyFAEt0lSIqpBr6AlsmAlfrygyFE7cgVIReiUH9383\ngbLPxEwr/BZqhiyTBsbJdIx2hBs01RwuuX7CjRH4KZMM1jVN214m+4sfsmUby+gp\nRu5DFXrXOB3Rx/lI9JilXCfXCvyLfvXQvOF7HxOhAoGAHL8bWqabXXuSKrJM8AYQ\nBSsoGq2EgL2NU1Z3Vmo5P4SVmJO2ETDmCTrZ36WXFB8q9npsL/T+CWR+u7JofF5z\nX7alsXT8dYBKOE6jPySaXREJ4xz9vJEDw9akvglQDmOBxIPyIoBcoIQ+Wn4NMBtz\nvGg3z2lMNhlSQJcjhk8KXh0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "artika-sheets@tidal-nova-435410-f3.iam.gserviceaccount.com",
+  "client_id": "104364447472972104421",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/artika-sheets%40tidal-nova-435410-f3.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

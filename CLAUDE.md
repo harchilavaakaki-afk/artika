@@ -20,7 +20,7 @@ FastAPI + SQLite + React + TypeScript. 10 проектов (кадры, паде
 |-----|---------|
 | `статус` | Сводка: проекты, задачи, токены |
 | `утро` | `bash agents/morning-briefing.sh` |
-| `задачи` | GET /api/v1/tasks/ → по статусам |
+| `задачи` | GET /api/v1/projects/1/tasks → по статусам |
 | `кампании` | GET /api/v1/campaigns/ |
 | `деплой` | git push (Render+Vercel auto) |
 | `vk токен` | `bash agents/vk-token-refresh.sh` |

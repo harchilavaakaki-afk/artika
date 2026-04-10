@@ -1,0 +1,241 @@
+{
+  "tg": {
+    "subscribers": 875,
+    "subscribers_prev": 875,
+    "growth": 0,
+    "posts_on_page": 20,
+    "channel_url": "https://t.me/padelvidnoe"
+  },
+  "period": {
+    "date1": "2026-04-03",
+    "date2": "2026-04-09"
+  },
+  "metrika": {
+    "visits": 1349,
+    "users": 935,
+    "sources": [
+      {
+        "id": "ad",
+        "name": "Реклама",
+        "visits": 799,
+        "users": 624,
+        "bounce": 33.29,
+        "depth": 1.12,
+        "duration": 50
+      },
+      {
+        "id": "direct",
+        "name": "Прямые заходы",
+        "visits": 297,
+        "users": 191,
+        "bounce": 24.92,
+        "depth": 1.73,
+        "duration": 145
+      },
+      {
+        "id": "organic",
+        "name": "Поисковые системы",
+        "visits": 118,
+        "users": 97,
+        "bounce": 16.95,
+        "depth": 1.8,
+        "duration": 218
+      },
+      {
+        "id": "internal",
+        "name": "Внутренние переходы",
+        "visits": 85,
+        "users": 41,
+        "bounce": 25.88,
+        "depth": 1.44,
+        "duration": 125
+      },
+      {
+        "id": "referral",
+        "name": "Переходы по ссылкам",
+        "visits": 47,
+        "users": 38,
+        "bounce": 21.28,
+        "depth": 1.66,
+        "duration": 389
+      },
+      {
+        "id": "social",
+        "name": "Социальные сети",
+        "visits": 2,
+        "users": 2,
+        "bounce": 50.0,
+        "depth": 1.5,
+        "duration": 69
+      },
+      {
+        "id": "messenger",
+        "name": "Мессенджеры",
+        "visits": 1,
+        "users": 1,
+        "bounce": 100.0,
+        "depth": 1.0,
+        "duration": 0
+      }
+    ],
+    "tg_clicks": 1,
+    "leads": 0,
+    "calls": 0
+  },
+  "direct": [
+    {
+      "id": "704317567",
+      "name": "Падел | Поиск",
+      "daily": [
+        {
+          "date": "2026-04-03",
+          "impressions": 1322.0,
+          "clicks": 29.0,
+          "ctr": 2.19,
+          "cost": 1648.08,
+          "avg_cpc": 56.83,
+          "depth": 1.75
+        },
+        {
+          "date": "2026-04-04",
+          "impressions": 1387.0,
+          "clicks": 24.0,
+          "ctr": 1.73,
+          "cost": 1563.55,
+          "avg_cpc": 65.15,
+          "depth": 1.43
+        },
+        {
+          "date": "2026-04-05",
+          "impressions": 1566.0,
+          "clicks": 35.0,
+          "ctr": 2.23,
+          "cost": 2529.5,
+          "avg_cpc": 72.27,
+          "depth": 1.29
+        },
+        {
+          "date": "2026-04-06",
+          "impressions": 1049.0,
+          "clicks": 32.0,
+          "ctr": 3.05,
+          "cost": 2032.12,
+          "avg_cpc": 63.5,
+          "depth": 1.47
+        },
+        {
+          "date": "2026-04-07",
+          "impressions": 1185.0,
+          "clicks": 23.0,
+          "ctr": 1.94,
+          "cost": 1221.02,
+          "avg_cpc": 53.09,
+          "depth": 1.12
+        },
+        {
+          "date": "2026-04-08",
+          "impressions": 1043.0,
+          "clicks": 28.0,
+          "ctr": 2.68,
+          "cost": 1925.79,
+          "avg_cpc": 68.78,
+          "depth": 1.33
+        },
+        {
+          "date": "2026-04-09",
+          "impressions": 953.0,
+          "clicks": 27.0,
+          "ctr": 2.83,
+          "cost": 1548.35,
+          "avg_cpc": 57.35,
+          "depth": 1.97
+        }
+      ],
+      "totals": {
+        "impressions": 8505.0,
+        "clicks": 198.0,
+        "cost": 12468.41,
+        "ctr": 2.33,
+        "avg_cpc": 62.97,
+        "avg_daily_cost": 1781.2
+      }
+    },
+    {
+      "id": "704350848",
+      "name": "Падел | РСЯ",
+      "daily": [
+        {
+          "date": "2026-04-03",
+          "impressions": 1422.0,
+          "clicks": 58.0,
+          "ctr": 4.08,
+          "cost": 1861.18,
+          "avg_cpc": 32.09,
+          "depth": 1.05
+        },
+        {
+          "date": "2026-04-04",
+          "impressions": 608.0,
+          "clicks": 49.0,
+          "ctr": 8.06,
+          "cost": 2782.64,
+          "avg_cpc": 56.79,
+          "depth": 1.23
+        },
+        {
+          "date": "2026-04-05",
+          "impressions": 1609.0,
+          "clicks": 194.0,
+          "ctr": 12.06,
+          "cost": 1147.51,
+          "avg_cpc": 5.92,
+          "depth": 1.01
+        },
+        {
+          "date": "2026-04-06",
+          "impressions": 5293.0,
+          "clicks": 113.0,
+          "ctr": 2.13,
+          "cost": 1931.44,
+          "avg_cpc": 17.09,
+          "depth": 1.02
+        },
+        {
+          "date": "2026-04-07",
+          "impressions": 6101.0,
+          "clicks": 74.0,
+          "ctr": 1.21,
+          "cost": 1832.34,
+          "avg_cpc": 24.76,
+          "depth": 1.08
+        },
+        {
+          "date": "2026-04-08",
+          "impressions": 3122.0,
+          "clicks": 22.0,
+          "ctr": 0.7,
+          "cost": 1350.07,
+          "avg_cpc": 61.37,
+          "depth": 1.04
+        },
+        {
+          "date": "2026-04-09",
+          "impressions": 1663.0,
+          "clicks": 32.0,
+          "ctr": 1.92,
+          "cost": 1789.37,
+          "avg_cpc": 55.92,
+          "depth": 1.04
+        }
+      ],
+      "totals": {
+        "impressions": 19818.0,
+        "clicks": 542.0,
+        "cost": 12694.55,
+        "ctr": 2.73,
+        "avg_cpc": 23.42,
+        "avg_daily_cost": 1813.51
+      }
+    }
+  ]
+}
