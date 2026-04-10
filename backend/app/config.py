@@ -33,6 +33,10 @@ class Settings(BaseSettings):
     vk_ads_cookie: str = ""  # Browser session cookies from ads.vk.com (Cookie header value)
     vk_ads_account_id: str = "4168629"  # myTarget account ID
 
+    # Calltouch
+    calltouch_site_id: str = "80119"
+    calltouch_api_key: str = "a64cb64c3a3824c6e4e847a394de662768a04290bb0b9"
+
     # Claude AI
     anthropic_api_key: str = ""
     claude_model: str = "claude-sonnet-4-20250514"

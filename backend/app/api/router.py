@@ -11,6 +11,7 @@ from app.api.settings import router as settings_router
 from app.api.webmaster import router as webmaster_router
 from app.api.vk_ads_api import router as vk_ads_router
 from app.api.project_tasks import router as project_tasks_router
+from app.api.calltouch import router as calltouch_router
 
 api_router = APIRouter(prefix="/api/v1")
 
@@ -27,3 +28,4 @@ api_router.include_router(settings_router)
 api_router.include_router(webmaster_router)
 api_router.include_router(vk_ads_router)
 api_router.include_router(project_tasks_router)
+api_router.include_router(calltouch_router)
