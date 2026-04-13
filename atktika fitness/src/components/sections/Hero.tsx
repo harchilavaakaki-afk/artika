@@ -96,9 +96,12 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative lg:grid lg:grid-cols-2 lg:gap-12 items-center">
 
-          {/* Mobile girl — absolute right overlay */}
+          {/* Girl overlay — responsive across all widths up to lg */}
           <motion.div
-            className="lg:hidden absolute right-0 top-[55%] bottom-[70px] w-[45%] flex items-end justify-center pointer-events-none"
+            className="lg:hidden absolute right-0 pointer-events-none
+              top-[55%] bottom-[70px] w-[45%]
+              sm:top-[30%] sm:bottom-[50px] sm:w-[38%]
+              md:top-[15%] md:bottom-[40px] md:w-[36%]"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
@@ -106,9 +109,9 @@ export default function Hero() {
             <Image
               src="/images/hero/hero-girl.png"
               alt="Девушка с гантелями"
-              width={300}
-              height={500}
-              className="h-full w-auto object-contain object-bottom"
+              width={400}
+              height={700}
+              className="h-full w-auto object-contain object-bottom ml-auto"
               priority
             />
           </motion.div>
