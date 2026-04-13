@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 /* ---------- CountUp ---------- */
 function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
@@ -139,16 +140,14 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <Image
+              src="/images/hero/hero-girl.jpeg"
+              alt="Девушка с гантелями"
+              width={300}
+              height={500}
               className="h-full w-auto object-contain object-bottom"
-            >
-              <source src="/images/hero/hero-girl-alpha.webm" type="video/webm" />
-              <source src="/images/hero/hero-girl.mp4" type="video/mp4" />
-            </video>
+              priority
+            />
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-dark-800 via-dark-800/50 to-transparent pointer-events-none" />
             <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-dark-800/60 to-transparent pointer-events-none" />
           </motion.div>
@@ -232,22 +231,18 @@ export default function Hero() {
             {/* Ambient glow */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-accent/15 rounded-full blur-[80px] pointer-events-none" />
 
-            {/* Girl video — proportional, anchored to bottom */}
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            {/* Girl photo */}
+            <Image
+              src="/images/hero/hero-girl.jpeg"
+              alt="Девушка с гантелями — фитнес-студия Арктика"
+              width={400}
+              height={600}
               className="relative z-[1] h-full w-auto object-contain object-bottom drop-shadow-2xl"
-            >
-              <source src="/images/hero/hero-girl-alpha.webm" type="video/webm" />
-              <source src="/images/hero/hero-girl.mp4" type="video/mp4" />
-            </video>
+              priority
+            />
 
             {/* Bottom fade — blends feet into section */}
-            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-dark-800 via-dark-800/60 to-transparent z-[2] pointer-events-none" />
-            {/* Left fade */}
-            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black/30 to-transparent z-[2] pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-dark-800 via-dark-800/60 to-transparent z-[2] pointer-events-none" />
 
           </motion.div>
         </div>
