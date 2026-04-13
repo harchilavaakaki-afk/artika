@@ -249,44 +249,6 @@ export default function Hero() {
             {/* Left fade */}
             <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black/30 to-transparent z-[2] pointer-events-none" />
 
-            {/* Floating badge: discount */}
-            <motion.div
-              className="absolute bottom-32 -left-4 z-10"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.2, duration: 0.5 }}
-            >
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-                className="bg-dark-800/90 backdrop-blur-sm border border-dark-600 rounded-2xl px-5 py-3 shadow-2xl"
-              >
-                <div className="text-xs text-gray-400 mb-0.5">Группы до</div>
-                <div className="font-heading font-bold text-white text-lg">12 человек</div>
-              </motion.div>
-            </motion.div>
-
-            {/* Floating badge: members count */}
-            <motion.div
-              className="absolute top-16 right-0 z-10"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.5, duration: 0.5 }}
-            >
-              <motion.div
-                animate={{ y: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut", delay: 0.5 }}
-                className="bg-dark-800/90 backdrop-blur-sm border border-dark-600 rounded-2xl px-4 py-3 shadow-2xl"
-              >
-                <div className="text-xs text-gray-400 mb-0.5">Пробное занятие</div>
-                <div className="font-heading font-bold text-white">бесплатно</div>
-              </motion.div>
-            </motion.div>
-
-            {/* Decorative dots */}
-            <div className="absolute top-16 left-6 w-3 h-3 rounded-full bg-accent pointer-events-none z-[3]" />
-            <div className="absolute top-24 left-2 w-2 h-2 rounded-full bg-accent/50 pointer-events-none z-[3]" />
-            <div className="absolute bottom-36 right-4 w-2.5 h-2.5 rounded-full bg-accent pointer-events-none z-[3]" />
           </motion.div>
         </div>
       </div>

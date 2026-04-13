@@ -101,7 +101,7 @@ export default function WhyUs() {
         {/* LARGE CARD — photo background, main USP */}
         <motion.div
           variants={fadeUp}
-          className="relative overflow-hidden rounded-3xl min-h-[380px] md:col-span-2 lg:col-span-2 lg:row-span-2 group cursor-default"
+          className="relative overflow-hidden rounded-3xl min-h-[280px] md:col-span-2 lg:col-span-2 lg:row-span-2 group cursor-default"
         >
           <Image
             src="/images/gallery/group-class-squats.jpg"
@@ -113,18 +113,15 @@ export default function WhyUs() {
           {/* Dark gradient — covers full card for centered text */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/25" />
 
-          {/* Accent top-left bar */}
-          <div className="absolute top-0 left-0 w-1 h-full bg-accent" />
-
           {/* Content — vertically centered */}
-          <div className="absolute inset-0 flex flex-col justify-center p-8 sm:p-10">
-            <div className="inline-block text-accent text-xs font-bold uppercase tracking-widest border border-accent/40 px-3 py-1 rounded-full mb-4">
+          <div className="absolute inset-0 flex flex-col justify-center p-6 sm:p-8">
+            <div className="inline-block text-accent text-xs font-bold uppercase tracking-widest mb-3">
               Главное отличие
             </div>
-            <h3 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-3 leading-tight max-w-md">
+            <h3 className="font-heading text-xl sm:text-2xl lg:text-3xl font-extrabold text-white mb-2 leading-tight max-w-md">
               Тренер помнит<br />твоё имя
             </h3>
-            <p className="text-gray-300 text-sm sm:text-base max-w-sm leading-relaxed">
+            <p className="text-gray-300 text-xs sm:text-sm max-w-sm leading-relaxed">
               У нас нет 300 человек в зале и&nbsp;очереди за&nbsp;гантелями. Маленькие группы&nbsp;— это не маркетинг. Это то, что ты почувствуешь уже на&nbsp;первом занятии.
             </p>
           </div>
