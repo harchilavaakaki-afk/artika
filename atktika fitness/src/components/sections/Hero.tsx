@@ -113,11 +113,11 @@ export default function Hero() {
               className="h-full w-auto object-contain object-bottom"
               priority
             />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-dark-800 via-dark-800/50 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-dark-800/80 to-transparent pointer-events-none" />
           </motion.div>
 
           {/* Left: text */}
-          <div className="relative z-10 max-w-[90%] sm:max-w-[80%] lg:max-w-none">
+          <div className="relative z-10 max-w-[58%] sm:max-w-[80%] lg:max-w-none">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

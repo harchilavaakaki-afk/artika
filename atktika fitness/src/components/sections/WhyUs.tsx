@@ -78,10 +78,10 @@ export default function WhyUs() {
         </motion.p>
         <motion.h2
           variants={fadeUp}
-          className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight"
+          className="font-heading text-2xl sm:text-4xl lg:text-5xl font-extrabold leading-tight"
         >
-          500 человек уже <span className="text-accent">получили&nbsp;результат.</span><br />
-          <span className="text-gray-400 font-bold text-2xl sm:text-3xl lg:text-4xl">Вы&nbsp;— следующий?</span>
+          500 человек уже <span className="text-accent">получили результат.</span><br />
+          <span className="text-gray-400 font-bold text-xl sm:text-3xl lg:text-4xl">Вы — следующий?</span>
         </motion.h2>
       </motion.div>
 
