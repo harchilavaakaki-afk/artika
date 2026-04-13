@@ -261,8 +261,8 @@ export default function Hero() {
                 transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
                 className="bg-dark-800/90 backdrop-blur-sm border border-dark-600 rounded-2xl px-5 py-3 shadow-2xl"
               >
-                <div className="text-xs text-gray-400 mb-0.5">Скидки сезона</div>
-                <div className="font-heading font-bold text-white text-lg">до 50%</div>
+                <div className="text-xs text-gray-400 mb-0.5">Группы до</div>
+                <div className="font-heading font-bold text-white text-lg">12 человек</div>
               </motion.div>
             </motion.div>
 
@@ -278,8 +278,8 @@ export default function Hero() {
                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut", delay: 0.5 }}
                 className="bg-dark-800/90 backdrop-blur-sm border border-dark-600 rounded-2xl px-4 py-3 shadow-2xl"
               >
-                <div className="text-xs text-gray-400 mb-0.5">Уже с нами</div>
-                <div className="font-heading font-bold text-white">500+ клиентов</div>
+                <div className="text-xs text-gray-400 mb-0.5">Пробное занятие</div>
+                <div className="font-heading font-bold text-white">бесплатно</div>
               </motion.div>
             </motion.div>
 
