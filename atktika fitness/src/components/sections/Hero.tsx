@@ -168,7 +168,7 @@ export default function Hero() {
             </motion.div>
 
             <motion.div
-              className="mt-16 sm:mt-8 flex gap-10"
+              className="mt-24 sm:mt-8 flex gap-10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5 }}
