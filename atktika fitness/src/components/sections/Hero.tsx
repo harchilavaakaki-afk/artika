@@ -59,7 +59,7 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative h-screen min-h-[600px] flex items-start pt-20 lg:items-center lg:pt-0 overflow-hidden"
+      className="relative h-[100svh] min-h-[600px] flex flex-col justify-between pt-20 pb-16 lg:flex-row lg:items-center lg:pt-0 lg:pb-0 overflow-hidden"
     >
       {/* Parallax background — oversized wrapper so moving bg never shows gap */}
       <div className="absolute -inset-[100px] z-0">
@@ -74,7 +74,6 @@ export default function Hero() {
             <source src="/images/hero/hero-bg.mp4" type="video/mp4" />
           </video>
         </motion.div>
-        {/* Mobile: static image fallback (no transform = plays reliably) */}
         <div className="absolute inset-0 lg:hidden">
           <video
             autoPlay
@@ -96,12 +95,13 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative lg:grid lg:grid-cols-2 lg:gap-12 items-center">
 
-          {/* Girl overlay — responsive across all widths up to lg */}
+          {/* Girl overlay — mobile/tablet only (< lg) */}
           <motion.div
-            className="lg:hidden absolute right-0 pointer-events-none
-              top-[55%] bottom-[70px] w-[45%]
-              sm:top-[30%] sm:bottom-[50px] sm:w-[38%]
-              md:top-[15%] md:bottom-[40px] md:w-[36%]"
+            className="lg:hidden absolute right-0 pointer-events-none z-[5]
+              bottom-0 w-[48%] h-[55%]
+              min-[430px]:w-[44%] min-[430px]:h-[58%]
+              sm:w-[40%] sm:h-[65%]
+              md:w-[38%] md:h-[72%]"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
@@ -117,7 +117,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Left: text */}
-          <div className="relative z-10 max-w-[90%] sm:max-w-[80%] lg:max-w-none">
+          <div className="relative z-10 max-w-[58%] min-[430px]:max-w-[60%] sm:max-w-[62%] md:max-w-[65%] lg:max-w-none">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              className="mt-14 sm:mt-5 text-lg sm:text-xl text-gray-300 max-w-md leading-relaxed"
+              className="mt-6 sm:mt-5 text-lg sm:text-xl text-gray-300 max-w-md leading-relaxed"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
@@ -148,54 +148,69 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              className="mt-5 flex flex-wrap gap-3"
+              className="mt-5 flex flex-col sm:flex-row gap-3"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <a
                 href="/#signup"
-                className="bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 sm:px-8 sm:py-4 rounded-full text-base sm:text-lg transition-colors shadow-lg shadow-accent/30"
+                className="bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 sm:px-8 sm:py-4 rounded-full text-base sm:text-lg transition-colors shadow-lg shadow-accent/30 text-center"
               >
                 Узнать стоимость
               </a>
               <a
                 href="/schedule"
-                className="border border-white/25 hover:border-accent/60 text-white font-medium px-6 py-3 sm:px-8 sm:py-4 rounded-full text-base sm:text-lg transition-colors"
+                className="border border-white/25 hover:border-accent/60 text-white font-medium px-6 py-3 sm:px-8 sm:py-4 rounded-full text-base sm:text-lg transition-colors text-center"
               >
                 Расписание
               </a>
             </motion.div>
-
-            <motion.div
-              className="mt-24 sm:mt-8 flex gap-10"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-            >
-              {STATS.map((s) => (
-                <div key={s.label}>
-                  <div className="text-3xl font-heading font-bold">
-                    <CountUp end={s.end} suffix={s.suffix} />
-                  </div>
-                  <div className="text-sm text-gray-400 mt-0.5">{s.label}</div>
-                </div>
-              ))}
-            </motion.div>
           </div>
 
-          {/* Right: girl video — organic, no background */}
+          {/* Stats — outside text column so they span full width on mobile */}
           <motion.div
-            className="hidden lg:flex relative h-[540px] items-end justify-center"
+            className="relative z-10 lg:hidden mt-auto pt-6 flex gap-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+          >
+            {STATS.map((s) => (
+              <div key={s.label}>
+                <div className="text-3xl font-heading font-bold">
+                  <CountUp end={s.end} suffix={s.suffix} />
+                </div>
+                <div className="text-sm text-gray-400 mt-0.5">{s.label}</div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Stats — desktop (inside grid) */}
+          <motion.div
+            className="hidden lg:flex mt-8 gap-10 col-start-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+          >
+            {STATS.map((s) => (
+              <div key={s.label}>
+                <div className="text-3xl font-heading font-bold">
+                  <CountUp end={s.end} suffix={s.suffix} />
+                </div>
+                <div className="text-sm text-gray-400 mt-0.5">{s.label}</div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Right: girl — desktop only */}
+          <motion.div
+            className="hidden lg:flex relative h-[80vh] max-h-[700px] items-end justify-center row-span-2"
             style={{ y: photoY }}
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            {/* Ambient glow */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-accent/15 rounded-full blur-[80px] pointer-events-none" />
-
-            {/* Girl photo */}
             <Image
               src="/images/hero/hero-girl.png"
               alt="Девушка с гантелями — фитнес-студия Арктика"
@@ -204,10 +219,7 @@ export default function Hero() {
               className="relative z-[1] h-full w-auto object-contain object-bottom drop-shadow-2xl"
               priority
             />
-
-            {/* Bottom fade — blends feet into section */}
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-dark-800 via-dark-800/60 to-transparent z-[2] pointer-events-none" />
-
           </motion.div>
         </div>
       </div>
