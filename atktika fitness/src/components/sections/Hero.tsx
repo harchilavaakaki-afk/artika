@@ -117,7 +117,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Left: text */}
-          <div className="relative z-10 lg:max-w-none">
+          <div className="relative z-10 max-w-[90%] sm:max-w-[80%] lg:max-w-none">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              className="mt-5 text-lg sm:text-xl text-gray-300 max-w-[60%] sm:max-w-md leading-relaxed"
+              className="mt-5 text-lg sm:text-xl text-gray-300 max-w-md leading-relaxed"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
