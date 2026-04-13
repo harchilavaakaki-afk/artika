@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Mousewheel } from "swiper/modules";
+import { FreeMode, Mousewheel, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import { FACILITIES } from "@/lib/constants";
@@ -40,9 +40,12 @@ export default function Facilities() {
         transition={{ duration: 0.7, delay: 0.2 }}
       >
         <Swiper
-          modules={[FreeMode, Mousewheel]}
+          modules={[FreeMode, Mousewheel, Autoplay]}
           slidesPerView={2.5}
           spaceBetween={24}
+          loop={true}
+          speed={4000}
+          autoplay={{ delay: 1, disableOnInteraction: false, pauseOnMouseEnter: true }}
           freeMode={{ enabled: true, sticky: false }}
           mousewheel={{ forceToAxis: true }}
           slidesOffsetBefore={16}

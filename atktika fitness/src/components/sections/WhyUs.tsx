@@ -78,14 +78,10 @@ export default function WhyUs() {
         </motion.p>
         <motion.h2
           variants={fadeUp}
-          className="font-heading text-4xl sm:text-5xl font-extrabold leading-tight max-w-2xl"
+          className="font-heading text-4xl sm:text-5xl font-extrabold leading-tight"
         >
-          500 человек уже&nbsp;
-          <span className="text-accent">получили результат.</span>
-          <br />
-          <span className="text-gray-400 font-bold text-3xl sm:text-4xl">
-            Вы — следующий?
-          </span>
+          500 человек уже <span className="text-accent">получили результат.</span><br />
+          <span className="text-gray-400 font-bold text-3xl sm:text-4xl">Вы — следующий?</span>
         </motion.h2>
       </motion.div>
 
@@ -205,8 +201,8 @@ export default function WhyUs() {
             <div className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-3">
               Специально для вас
             </div>
-            <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white leading-snug">
-              Скидки до 50%&nbsp;—<br />новый сезон
+            <h3 className="font-heading text-2xl font-extrabold text-white leading-snug">
+              Скидки до 50% — новый сезон
             </h3>
             <p className="text-white/70 text-sm mt-3 leading-relaxed">
               Годовая карта включает&nbsp;2 тренировки по&nbsp;единоборствам в&nbsp;подарок. Спецпредложения для семей.

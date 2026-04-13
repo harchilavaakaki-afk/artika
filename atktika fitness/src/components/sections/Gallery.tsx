@@ -3,6 +3,9 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const PHOTOS = [
   { src: "/images/gallery/group-class-trainer.jpg", alt: "Групповое занятие — тренер Арктика Фитнес" },
@@ -24,9 +27,9 @@ export default function Gallery() {
   const inView = useInView(ref, { once: true, amount: 0.1 });
 
   return (
-    <section ref={ref} className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section ref={ref} className="py-20 sm:py-28 overflow-hidden">
       <motion.div
-        className="mb-10"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10"
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
@@ -39,27 +42,35 @@ export default function Gallery() {
         </h2>
       </motion.div>
 
-      <div className="columns-2 sm:columns-3 lg:columns-4 gap-3 space-y-3">
-        {PHOTOS.map((photo, i) => (
-          <motion.div
-            key={photo.src}
-            className="break-inside-avoid rounded-2xl overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: i * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <div className="relative w-full aspect-square group">
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              />
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.7, delay: 0.2 }}
+      >
+        <Swiper
+          modules={[Autoplay]}
+          slidesPerView="auto"
+          spaceBetween={12}
+          loop={true}
+          speed={5000}
+          autoplay={{ delay: 1, disableOnInteraction: false, pauseOnMouseEnter: true }}
+          allowTouchMove={true}
+        >
+          {PHOTOS.map((photo) => (
+            <SwiperSlide key={photo.src} style={{ width: 280 }}>
+              <div className="relative w-[280px] h-[280px] rounded-2xl overflow-hidden group">
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="280px"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </motion.div>
     </section>
   );
 }

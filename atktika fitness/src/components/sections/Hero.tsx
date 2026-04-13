@@ -49,59 +49,8 @@ const STATS = [
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const { scrollY } = useScroll();
 
-  // Boomerang: play forward → reverse → forward → ...
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.muted = true;
-    video.volume = 0;
-
-    let animFrame: number;
-    let reversing = false;
-    const STEP = 1 / 30; // 30fps backward step
-
-    const reversePlay = () => {
-      if (!video || !reversing) return;
-      video.currentTime = Math.max(0, video.currentTime - STEP);
-      if (video.currentTime <= 0) {
-        reversing = false;
-        video.play().catch(() => {});
-        return;
-      }
-      animFrame = requestAnimationFrame(reversePlay);
-    };
-
-    const handleEnded = () => {
-      reversing = true;
-      reversePlay();
-    };
-
-    video.addEventListener("ended", handleEnded);
-
-    // Same boomerang for mobile video
-    const mobileVid = mobileVideoRef.current;
-    let mAnimFrame: number;
-    let mReversing = false;
-    const mReversePlay = () => {
-      if (!mobileVid || !mReversing) return;
-      mobileVid.currentTime = Math.max(0, mobileVid.currentTime - STEP);
-      if (mobileVid.currentTime <= 0) { mReversing = false; mobileVid.play().catch(() => {}); return; }
-      mAnimFrame = requestAnimationFrame(mReversePlay);
-    };
-    const mHandleEnded = () => { mReversing = true; mReversePlay(); };
-    if (mobileVid) { mobileVid.addEventListener("ended", mHandleEnded); }
-
-    return () => {
-      video.removeEventListener("ended", handleEnded);
-      cancelAnimationFrame(animFrame);
-      if (mobileVid) { mobileVid.removeEventListener("ended", mHandleEnded); cancelAnimationFrame(mAnimFrame); }
-    };
-  }, []);
   // Absolute px values: BG moves slower than scroll (parallax depth)
   const bgY = useTransform(scrollY, [0, 700], ["0px", "100px"]);
   // Right photo panel counter-moves for extra depth
@@ -116,9 +65,9 @@ export default function Hero() {
       <div className="absolute -inset-[100px] z-0">
         <motion.div className="absolute inset-0 hidden lg:block" style={{ y: bgY }}>
           <video
-            ref={videoRef}
             autoPlay
             muted
+            loop
             playsInline
             poster="/images/hero/hero-main.jpg"
             className="absolute inset-0 w-full h-full object-cover"
@@ -132,6 +81,7 @@ export default function Hero() {
             ref={mobileVideoRef}
             autoPlay
             muted
+            loop
             playsInline
             poster="/images/hero/hero-main.jpg"
             className="absolute inset-0 w-full h-full object-cover"
@@ -146,7 +96,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-dark-800 via-transparent to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative lg:grid lg:grid-cols-2 lg:gap-12 items-center">
 
           {/* Mobile girl — absolute right overlay */}
