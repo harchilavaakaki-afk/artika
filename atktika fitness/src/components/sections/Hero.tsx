@@ -141,7 +141,7 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <Image
-              src="/images/hero/hero-girl.jpeg"
+              src="/images/hero/hero-girl.png"
               alt="Девушка с гантелями"
               width={300}
               height={500}
@@ -233,7 +233,7 @@ export default function Hero() {
 
             {/* Girl photo */}
             <Image
-              src="/images/hero/hero-girl.jpeg"
+              src="/images/hero/hero-girl.png"
               alt="Девушка с гантелями — фитнес-студия Арктика"
               width={400}
               height={600}
