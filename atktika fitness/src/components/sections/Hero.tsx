@@ -59,7 +59,7 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative h-[100svh] min-h-[600px] flex flex-col justify-between pt-20 pb-16 lg:flex-row lg:items-center lg:pt-0 lg:pb-0 overflow-hidden"
+      className="relative h-[100svh] min-h-[600px] flex items-start pt-20 lg:items-center lg:pt-0 overflow-hidden"
     >
       {/* Parallax background — oversized wrapper so moving bg never shows gap */}
       <div className="absolute -inset-[100px] z-0">
@@ -91,33 +91,33 @@ export default function Hero() {
       <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/90 via-black/65 to-black/30" />
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-dark-800 via-transparent to-transparent" />
 
+      {/* Girl overlay — mobile/tablet only, positioned against section */}
+      <motion.div
+        className="lg:hidden absolute right-0 bottom-0 pointer-events-none z-[5]
+          w-[50%] h-[50%]
+          min-[430px]:w-[46%] min-[430px]:h-[52%]
+          sm:w-[42%] sm:h-[58%]
+          md:w-[40%] md:h-[65%]"
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        <Image
+          src="/images/hero/hero-girl.png"
+          alt="Девушка с гантелями"
+          width={400}
+          height={700}
+          className="h-full w-auto object-contain object-bottom ml-auto"
+          priority
+        />
+      </motion.div>
+
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative lg:grid lg:grid-cols-2 lg:gap-12 items-center">
 
-          {/* Girl overlay — mobile/tablet only (< lg) */}
-          <motion.div
-            className="lg:hidden absolute right-0 pointer-events-none z-[5]
-              bottom-0 w-[48%] h-[55%]
-              min-[430px]:w-[44%] min-[430px]:h-[58%]
-              sm:w-[40%] sm:h-[65%]
-              md:w-[38%] md:h-[72%]"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <Image
-              src="/images/hero/hero-girl.png"
-              alt="Девушка с гантелями"
-              width={400}
-              height={700}
-              className="h-full w-auto object-contain object-bottom ml-auto"
-              priority
-            />
-          </motion.div>
-
           {/* Left: text */}
-          <div className="relative z-10 max-w-[58%] min-[430px]:max-w-[60%] sm:max-w-[62%] md:max-w-[65%] lg:max-w-none">
+          <div className="relative z-10 max-w-[90%] sm:max-w-[80%] lg:max-w-none">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -148,7 +148,7 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              className="mt-5 flex flex-col sm:flex-row gap-3"
+              className="mt-5 flex flex-wrap gap-3"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
@@ -168,9 +168,9 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Stats — outside text column so they span full width on mobile */}
+          {/* Stats — mobile: absolute bottom */}
           <motion.div
-            className="relative z-10 lg:hidden mt-auto pt-6 flex gap-10"
+            className="relative z-10 lg:hidden mt-10 flex gap-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.5 }}
