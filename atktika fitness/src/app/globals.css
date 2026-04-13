@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-dark-900: #0A0A0A;
+  --color-dark-800: #111111;
+  --color-dark-700: #1A1A1A;
+  --color-dark-600: #222222;
+  --color-dark-500: #333333;
+
+  --color-accent: #FF6B4A;
+  --color-accent-light: #FF8562;
+  --color-accent-dark: #E5553A;
+
+  --color-gray-400: #A0A0A0;
+  --color-gray-500: #666666;
+  --color-gray-600: #444444;
+
+  --font-heading: var(--font-unbounded);
+  --font-body: var(--font-inter);
+}
+
+:root {
+  --background: #111111;
+  --foreground: #ffffff;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), sans-serif;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444444;
+}
+
+/* Shake animation for form validation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Hide scrollbar for horizontal carousels */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Pulse glow for CTA buttons */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 74, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(255, 107, 74, 0.4); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #FF6B4A, #FF8562);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Prose dark theme overrides for blog */
+.prose-invert hr {
+  border-color: #333;
+}
+
+.prose-invert blockquote {
+  border-left-color: #FF6B4A;
+  color: #A0A0A0;
+}
+
+.prose-invert code {
+  background: #1A1A1A;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+
+.prose-invert table {
+  width: 100%;
+}
+
+.prose-invert th {
+  border-bottom: 2px solid #333;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.prose-invert td {
+  border-bottom: 1px solid #222;
+  padding: 0.75rem;
+}
+
+.prose-invert details {
+  background: #1A1A1A;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+}
+
+.prose-invert summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+}
+
+.prose-invert img {
+  border-radius: 12px;
+}
