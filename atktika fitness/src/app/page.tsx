@@ -3,6 +3,7 @@ import Hero from "@/components/sections/Hero";
 import WhyUs from "@/components/sections/WhyUs";
 import Programs from "@/components/sections/Programs";
 import Trainers from "@/components/sections/Trainers";
+import Pricing from "@/components/sections/Pricing";
 import Facilities from "@/components/sections/Facilities";
 import SchedulePreview from "@/components/sections/SchedulePreview";
 import Reviews from "@/components/sections/Reviews";
@@ -65,6 +66,7 @@ export default function Home() {
       <WhyUs />
       <Programs />
       <Trainers />
+      <Pricing />
       <Facilities />
       <SchedulePreview />
       <Reviews />
