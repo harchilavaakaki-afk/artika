@@ -50,6 +50,7 @@ const STATS = [
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const { scrollY } = useScroll();
 
   // Boomerang: play forward → reverse → forward → ...
@@ -81,9 +82,24 @@ export default function Hero() {
     };
 
     video.addEventListener("ended", handleEnded);
+
+    // Same boomerang for mobile video
+    const mobileVid = mobileVideoRef.current;
+    let mAnimFrame: number;
+    let mReversing = false;
+    const mReversePlay = () => {
+      if (!mobileVid || !mReversing) return;
+      mobileVid.currentTime = Math.max(0, mobileVid.currentTime - STEP);
+      if (mobileVid.currentTime <= 0) { mReversing = false; mobileVid.play().catch(() => {}); return; }
+      mAnimFrame = requestAnimationFrame(mReversePlay);
+    };
+    const mHandleEnded = () => { mReversing = true; mReversePlay(); };
+    if (mobileVid) { mobileVid.addEventListener("ended", mHandleEnded); }
+
     return () => {
       video.removeEventListener("ended", handleEnded);
       cancelAnimationFrame(animFrame);
+      if (mobileVid) { mobileVid.removeEventListener("ended", mHandleEnded); cancelAnimationFrame(mAnimFrame); }
     };
   }, []);
   // Absolute px values: BG moves slower than scroll (parallax depth)
@@ -113,10 +129,10 @@ export default function Hero() {
         {/* Mobile: static image fallback (no transform = plays reliably) */}
         <div className="absolute inset-0 lg:hidden">
           <video
+            ref={mobileVideoRef}
             autoPlay
             muted
             playsInline
-            loop
             poster="/images/hero/hero-main.jpg"
             className="absolute inset-0 w-full h-full object-cover"
           >
@@ -135,7 +151,7 @@ export default function Hero() {
 
           {/* Mobile girl — absolute right overlay */}
           <motion.div
-            className="lg:hidden absolute right-0 top-0 bottom-0 w-[48%] flex items-end justify-end pointer-events-none"
+            className="lg:hidden absolute -right-4 top-0 bottom-0 w-[42%] flex items-end justify-end pointer-events-none"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
@@ -184,27 +200,27 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              className="mt-8 flex flex-wrap gap-4"
+              className="mt-5 flex flex-wrap gap-3"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <a
                 href="/#signup"
-                className="bg-accent hover:bg-accent-light text-white font-semibold px-8 py-4 rounded-full text-lg transition-colors shadow-lg shadow-accent/30"
+                className="bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 sm:px-8 sm:py-4 rounded-full text-base sm:text-lg transition-colors shadow-lg shadow-accent/30"
               >
                 Узнать стоимость
               </a>
               <a
                 href="/schedule"
-                className="border border-white/25 hover:border-accent/60 text-white font-medium px-8 py-4 rounded-full text-lg transition-colors"
+                className="border border-white/25 hover:border-accent/60 text-white font-medium px-6 py-3 sm:px-8 sm:py-4 rounded-full text-base sm:text-lg transition-colors"
               >
                 Расписание
               </a>
             </motion.div>
 
             <motion.div
-              className="mt-12 flex gap-10"
+              className="mt-8 flex gap-10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5 }}
