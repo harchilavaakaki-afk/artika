@@ -65,9 +65,19 @@ export default function Map() {
             </div>
             <div>
               <h3 className="font-heading text-lg font-semibold mb-2">Как добраться</h3>
-              <ul className="text-gray-400 space-y-1 text-sm">
-                <li>🚗 На машине — бесплатная парковка</li>
-                <li>🚆 МЦД Расторгуево → 10 мин пешком</li>
+              <ul className="text-gray-400 space-y-3 text-sm">
+                <li className="flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10l-2-4H8L6 10l-2.5 1.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                  </span>
+                  На машине — бесплатная парковка
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                  </span>
+                  МЦД Расторгуево → 10 мин пешком
+                </li>
               </ul>
             </div>
           </div>
