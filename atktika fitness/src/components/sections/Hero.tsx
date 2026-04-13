@@ -59,7 +59,7 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative h-screen min-h-[600px] flex items-center overflow-hidden"
+      className="relative h-screen min-h-[600px] flex items-start pt-20 lg:items-center lg:pt-0 overflow-hidden"
     >
       {/* Parallax background — oversized wrapper so moving bg never shows gap */}
       <div className="absolute -inset-[100px] z-0">
@@ -78,7 +78,6 @@ export default function Hero() {
         {/* Mobile: static image fallback (no transform = plays reliably) */}
         <div className="absolute inset-0 lg:hidden">
           <video
-            ref={mobileVideoRef}
             autoPlay
             muted
             loop
@@ -101,7 +100,7 @@ export default function Hero() {
 
           {/* Mobile girl — absolute right overlay */}
           <motion.div
-            className="lg:hidden absolute -right-4 top-0 bottom-0 w-[42%] flex items-end justify-end pointer-events-none"
+            className="lg:hidden absolute -right-4 top-[20%] bottom-0 w-[42%] flex items-end justify-end pointer-events-none"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
@@ -115,7 +114,6 @@ export default function Hero() {
               priority
             />
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-dark-800 via-dark-800/50 to-transparent pointer-events-none" />
-            <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-dark-800/60 to-transparent pointer-events-none" />
           </motion.div>
 
           {/* Left: text */}
