@@ -100,7 +100,7 @@ export default function Hero() {
 
           {/* Mobile girl — absolute right overlay */}
           <motion.div
-            className="lg:hidden absolute -right-4 top-[50%] bottom-0 w-[42%] flex items-end justify-end pointer-events-none"
+            className="lg:hidden absolute -right-4 top-[60%] bottom-0 w-[42%] flex items-end justify-end pointer-events-none"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
@@ -139,7 +139,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              className="mt-5 text-lg sm:text-xl text-gray-300 max-w-md leading-relaxed"
+              className="mt-8 sm:mt-5 text-lg sm:text-xl text-gray-300 max-w-md leading-relaxed"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
