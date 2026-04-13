@@ -100,7 +100,7 @@ export default function Hero() {
 
           {/* Mobile girl — absolute right overlay */}
           <motion.div
-            className="lg:hidden absolute -right-4 top-[45%] bottom-[120px] w-[55%] flex items-end justify-end pointer-events-none"
+            className="lg:hidden absolute -right-4 top-[40%] bottom-[70px] w-[50%] flex items-end justify-end pointer-events-none"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
