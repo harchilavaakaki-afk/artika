@@ -139,7 +139,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              className="mt-8 sm:mt-5 text-lg sm:text-xl text-gray-300 max-w-md leading-relaxed"
+              className="mt-14 sm:mt-5 text-lg sm:text-xl text-gray-300 max-w-md leading-relaxed"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
