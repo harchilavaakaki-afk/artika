@@ -98,7 +98,7 @@ export default function Hero() {
 
           {/* Mobile girl — absolute right overlay */}
           <motion.div
-            className="lg:hidden absolute -right-0 top-[55%] bottom-[70px] w-[40%] flex items-end justify-end pointer-events-none"
+            className="lg:hidden absolute right-[10%] top-[55%] bottom-[70px] w-[52%] flex items-end justify-end pointer-events-none"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
@@ -111,7 +111,6 @@ export default function Hero() {
               className="h-full w-auto object-contain object-bottom"
               priority
             />
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-dark-800/80 to-transparent pointer-events-none" />
           </motion.div>
 
           {/* Left: text */}
