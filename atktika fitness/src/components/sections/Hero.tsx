@@ -69,7 +69,6 @@ export default function Hero() {
             muted
             loop
             playsInline
-            poster="/images/hero/hero-main.jpg"
             className="absolute inset-0 w-full h-full object-cover"
           >
             <source src="/images/hero/hero-bg.mp4" type="video/mp4" />
@@ -82,7 +81,6 @@ export default function Hero() {
             muted
             loop
             playsInline
-            poster="/images/hero/hero-main.jpg"
             className="absolute inset-0 w-full h-full object-cover"
           >
             <source src="/images/hero/hero-bg.mp4" type="video/mp4" />
