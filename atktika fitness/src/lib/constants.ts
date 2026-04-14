@@ -12,7 +12,7 @@ export const SITE = {
   phoneSales: "+7 936 142 3841",
   telegram: "https://t.me/arcfit",
   hours: "7:00–22:00",
-  geo: { lat: 55.5494, lng: 37.7086 },
+  geo: { lat: 55.561548, lng: 37.712605 },
   description:
     "Фитнес-студия в спортивном комплексе Арктика, г. Видное. 20+ направлений, 9 тренеров, тренажёрный зал.",
 } as const;

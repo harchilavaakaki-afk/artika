@@ -61,7 +61,7 @@ export default function Hero() {
       ref={ref}
       className="relative h-[100svh] min-h-[600px] flex flex-col pt-20 lg:flex-row lg:items-center lg:pt-0 overflow-hidden"
     >
-      {/* Parallax background — oversized wrapper so moving bg never shows gap */}
+      {/* Video background — oversized wrapper so moving bg never shows gap */}
       <div className="absolute -inset-[100px] z-0">
         <motion.div className="absolute inset-0 hidden lg:block" style={{ y: bgY }}>
           <video

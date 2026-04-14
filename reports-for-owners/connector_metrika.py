@@ -56,15 +56,12 @@ def fetch(date1, date2):
             "bounce": round(m[2], 2), "depth": round(m[3], 2), "duration": int(m[4])
         })
 
-    # 2. Переходы в ТГ (из метрики — по реферреру t.me)
+    # 2. Переходы в ТГ — целевые визиты по цели "10 переход в ТГ канал" (483767251)
     tg_clicks = 0
     try:
         tg = get(token, cid, {
             **common,
-            "dimensions": "ym:s:referer",
-            "metrics":    "ym:s:visits",
-            "filters":    "ym:s:referer=~'t.me'",
-            "limit":      1,
+            "metrics": "ym:s:goal483767251visits",
         })
         tg_clicks = int(tg.get("totals", [0])[0])
     except Exception as e:

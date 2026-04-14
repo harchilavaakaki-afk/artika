@@ -18,15 +18,19 @@ echo " Артика — недельный отчёт $DATE1 → $DATE2"
 echo "========================================"
 
 echo ""
-echo "[1/3] Яндекс Метрика..."
+echo "[1/4] Яндекс Метрика..."
 python connector_metrika.py "$DATE1" "$DATE2" || echo "  ⚠ Метрика: проверь токен в _config.json"
 
 echo ""
-echo "[2/3] Яндекс Директ..."
+echo "[2/4] Calltouch (лиды)..."
+python connector_calltouch.py "$DATE1" "$DATE2" || echo "  ⚠ Calltouch: проверь токен в _config.json"
+
+echo ""
+echo "[3/4] Яндекс Директ..."
 python connector_direct.py "$DATE1" "$DATE2" || echo "  ⚠ Директ: проверь токен в _config.json"
 
 echo ""
-echo "[3/3] Телеграм подписчики..."
+echo "[4/4] Телеграм подписчики..."
 python connector_tg.py || echo "  ⚠ ТГ: ошибка парсинга, заполни вручную"
 
 echo ""

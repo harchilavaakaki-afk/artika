@@ -9,8 +9,7 @@ const fadeUp: Variants = {
 };
 
 export default function Map() {
-  const { lat, lng } = SITE.geo;
-  const mapSrc = `https://yandex.ru/map-widget/v1/?ll=${lng},${lat}&z=16&pt=${lng},${lat},pm2rdm&lang=ru_RU`;
+  const mapSrc = `https://yandex.ru/map-widget/v1/?ll=37.712605,55.561548&z=16&pt=37.712605,55.561548,pm2rdm&lang=ru_RU`;
 
   return (
     <section className="py-20 sm:py-28 bg-dark-900">

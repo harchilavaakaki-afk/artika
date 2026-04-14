@@ -1,11 +1,4 @@
 {
-  "tg": {
-    "subscribers": 875,
-    "subscribers_prev": 875,
-    "growth": 0,
-    "posts_on_page": 20,
-    "channel_url": "https://t.me/padelvidnoe"
-  },
   "period": {
     "date1": "2026-04-03",
     "date2": "2026-04-09"
@@ -78,7 +71,7 @@
         "duration": 0
       }
     ],
-    "tg_clicks": 1,
+    "tg_clicks": 88,
     "leads": 0,
     "calls": 0
   },
@@ -237,5 +230,18 @@
         "avg_daily_cost": 1813.51
       }
     }
-  ]
+  ],
+  "tg": {
+    "subscribers": 875,
+    "subscribers_prev": 875,
+    "growth": 0,
+    "posts_on_page": 20,
+    "channel_url": "https://t.me/padelvidnoe"
+  },
+  "calltouch": {
+    "leads": 50,
+    "target_calls": 47,
+    "total_calls": 50,
+    "requests": 13
+  }
 }
