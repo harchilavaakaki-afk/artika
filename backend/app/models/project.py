@@ -21,6 +21,11 @@ class Project(Base, TimestampMixin):
     # Yandex Direct
     direct_client_login: Mapped[str | None] = mapped_column(String(255))
 
+    # Which Yandex OAuth token to use for this project's Direct/Metrika/Webmaster calls.
+    # "default" = settings.yandex_oauth_token (sportvsegda — кадры/курьеры)
+    # "padel"   = settings.yandex_oauth_token_padel (artikavidnoe — padelvidnoe.ru)
+    yandex_token_ref: Mapped[str] = mapped_column(String(32), default="default", server_default="default")
+
     # VK Ads (myTarget)
     vk_account_id: Mapped[int | None] = mapped_column(BigInteger)
 

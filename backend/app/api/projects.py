@@ -31,6 +31,7 @@ class ProjectResponse(BaseModel):
     direct_client_login: str | None
     vk_account_id: int | None
     is_active: bool
+    yandex_token_ref: str = "default"
 
     model_config = {"from_attributes": True}
 
@@ -44,6 +45,7 @@ class ProjectUpdate(BaseModel):
     direct_client_login: str | None = None
     vk_account_id: int | None = None
     is_active: bool | None = None
+    yandex_token_ref: str | None = None
 
 
 @router.get("", response_model=list[ProjectResponse])

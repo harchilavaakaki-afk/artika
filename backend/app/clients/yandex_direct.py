@@ -39,13 +39,16 @@ class YandexDirectClient(BaseYandexClient):
         self,
         states: list[str] | None = None,
         statuses: list[str] | None = None,
+        ids: list[int] | None = None,
     ) -> list[dict]:
-        """Fetch all campaigns."""
-        selection_criteria = {}
+        """Fetch all campaigns (optionally filtered by ID/state/status)."""
+        selection_criteria: dict = {}
         if states:
             selection_criteria["States"] = states
         if statuses:
             selection_criteria["Statuses"] = statuses
+        if ids:
+            selection_criteria["Ids"] = ids
 
         params = {
             "SelectionCriteria": selection_criteria,
@@ -101,20 +104,28 @@ class YandexDirectClient(BaseYandexClient):
         self,
         date_from: date,
         date_to: date,
+        campaign_ids: list[int] | None = None,
     ) -> list[dict]:
         """Get campaign performance report (TSV format via Reports API)."""
+        selection: dict = {
+            "DateFrom": date_from.isoformat(),
+            "DateTo": date_to.isoformat(),
+        }
+        if campaign_ids:
+            selection["Filter"] = [{
+                "Field": "CampaignId",
+                "Operator": "IN",
+                "Values": [str(i) for i in campaign_ids],
+            }]
         report_def = {
             "params": {
-                "SelectionCriteria": {
-                    "DateFrom": date_from.isoformat(),
-                    "DateTo": date_to.isoformat(),
-                },
+                "SelectionCriteria": selection,
                 "FieldNames": [
                     "CampaignId", "Date", "Impressions", "Clicks",
                     "Cost", "Conversions", "Revenue", "Ctr",
                     "AvgCpc", "AvgImpressionPosition", "BounceRate",
                 ],
-                "ReportName": f"campaign_stats_{date_from}_{date_to}",
+                "ReportName": f"campaign_stats_{date_from}_{date_to}_{int(__import__('time').time()*1000)}",
                 "ReportType": "CAMPAIGN_PERFORMANCE_REPORT",
                 "DateRangeType": "CUSTOM_DATE",
                 "Format": "TSV",
@@ -128,19 +139,27 @@ class YandexDirectClient(BaseYandexClient):
         self,
         date_from: date,
         date_to: date,
+        campaign_ids: list[int] | None = None,
     ) -> list[dict]:
         """Get search queries report."""
+        selection: dict = {
+            "DateFrom": date_from.isoformat(),
+            "DateTo": date_to.isoformat(),
+        }
+        if campaign_ids:
+            selection["Filter"] = [{
+                "Field": "CampaignId",
+                "Operator": "IN",
+                "Values": [str(i) for i in campaign_ids],
+            }]
         report_def = {
             "params": {
-                "SelectionCriteria": {
-                    "DateFrom": date_from.isoformat(),
-                    "DateTo": date_to.isoformat(),
-                },
+                "SelectionCriteria": selection,
                 "FieldNames": [
                     "CampaignId", "Query", "Impressions", "Clicks",
                     "Cost", "CriterionId", "Date",
                 ],
-                "ReportName": f"search_queries_{date_from}_{date_to}",
+                "ReportName": f"search_queries_{date_from}_{date_to}_{int(__import__('time').time()*1000)}",
                 "ReportType": "SEARCH_QUERY_PERFORMANCE_REPORT",
                 "DateRangeType": "CUSTOM_DATE",
                 "Format": "TSV",
