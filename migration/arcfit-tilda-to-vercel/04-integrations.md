@@ -58,21 +58,30 @@ https://cloud.1c.fitness/api/hs/lead/Tilda/245e31f4-7c6c-4727-90c9-737e631cbf21
 
 Цепочка: Tilda-форма → 1C Fitness webhook → 1C CRM → Bitrix24 (через интеграцию) → Email уведомления менеджерам.
 
-### После миграции на Next.js
-В коде уже есть `/api/lead/route.ts`:
-```ts
-const webhookUrl = process.env.FITNESS_LEAD_WEBHOOK!;
-await fetch(webhookUrl, { method: 'POST', body: JSON.stringify({ name, phone }) });
-```
+### После миграции на Next.js — ✅ РАБОТАЕТ (2026-05-04)
 
-Что задать в Vercel env vars:
+В коде `/api/lead/route.ts` (server-only):
+- Принимает JSON `{name, phone, email?, program?}` от формы
+- Преобразует в **Tilda-формат form-encoded** (`Name`, `Phone`, `Email`, `formid`, `formname`, `tranid`, `source`) — ключевой момент: 1C.Fitness ожидает именно этот payload, JSON отвечает 502
+- Шлёт через `FITNESS_LEAD_WEBHOOK` env
+
+Vercel env (✅ залит в production):
 ```
 FITNESS_LEAD_WEBHOOK=https://cloud.1c.fitness/api/hs/lead/Tilda/245e31f4-7c6c-4727-90c9-737e631cbf21
 ```
 
-Тот же endpoint, что использует Tilda — поэтому 1C Fitness, Bitrix24 и email-уведомления продолжат работать без изменений на стороне CRM.
+Тот же endpoint, что использует Tilda — поэтому 1C.Fitness, Bitrix24 и email-уведомления продолжат работать без изменений на стороне CRM.
 
-⚠️ Этот URL содержит секретный UUID в пути (`245e31f4-7c6c-4727-90c9-737e631cbf21`). Хранить только в encrypted env, не коммитить в код, не светить в client bundle (server-side only — в `/api/lead/route.ts` это уже соблюдено).
+**Тест 2026-05-04** (после фикса form-encoded):
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"name":"_DEPLOY_TEST_VERIFY_","phone":"+79990000001"}' \
+  https://arcfit-next.vercel.app/api/lead
+# → {"success":true,"tranid":"arcfit-next-1777889833881-wm4y7w"}
+```
+✅ Заявка дошла в 1C.Fitness → проброс в Bitrix24 + email.
+
+⚠️ URL содержит секретный UUID в пути (`245e31f4-...`). Хранится только в **encrypted** env, не коммитится в код, не светится в client bundle (server-side only — в `/api/lead/route.ts` это соблюдено).
 
 ### Опционально — отдельный канал для Vercel
 Если нужно различать «лиды с Tilda» и «лиды с Next.js» в 1C Fitness — попросить владельца завести **второй webhook UUID** в 1C Fitness админке (например `/lead/Vercel/<новый-UUID>`). Тогда:

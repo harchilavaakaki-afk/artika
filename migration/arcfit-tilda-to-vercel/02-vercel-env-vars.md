@@ -1,5 +1,9 @@
 # 02 — Environment Variables в Vercel
 
+> **Статус на 2026-05-04: ВСЕ env vars залиты в production.** Этот документ — для воспроизведения окружения с нуля и понимания значений.
+> Готовые значения и шаблон — в `.env.production.example` (рядом).
+> Автоматическая заливка — `./deploy.ps1 set-env` (Windows) или `./deploy.sh set-env` (Unix).
+
 Все переменные ставить в **Project Settings → Environment Variables → Production** (можно дублировать на Preview/Development если нужно тестировать).
 
 Через API (Claude может сам, токен лежит в `~/.claude/secrets/vercel.env`):
@@ -20,10 +24,12 @@ curl -X POST -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: applicat
 
 ### Обязательные
 
-| Key | Value (откуда взять) | Используется в | Public? |
-|-----|----------------------|----------------|---------|
-| `NEXT_PUBLIC_YM_ID` | `95693874` (взято с Tilda HTML, см. 00-current-state) | `src/components/analytics/YandexMetrika.tsx` | **public** (префикс `NEXT_PUBLIC_`) |
-| `FITNESS_LEAD_WEBHOOK` | URL вебхука для отправки лидов. **TODO**: уточнить — Tilda сейчас отправляет через свой коннектор (TG бот / email / CRM); нам нужен или прямой URL TG-бота `https://api.telegram.org/bot<TOKEN>/sendMessage`, или Make.com/n8n webhook | `src/app/api/lead/route.ts` | encrypted |
+| Key | Value | Используется в | Тип | Залит ли |
+|-----|-------|----------------|-----|----------|
+| `NEXT_PUBLIC_YM_ID` | `95693874` | `src/app/layout.tsx` (SSR `<head>`) + `src/lib/metrika.ts` (`reachGoal`) | plain (public) | ✅ production+preview+development |
+| `FITNESS_LEAD_WEBHOOK` | `https://cloud.1c.fitness/api/hs/lead/Tilda/245e31f4-7c6c-4727-90c9-737e631cbf21` | `src/app/api/lead/route.ts` (server-only) | encrypted | ✅ production |
+
+Тестовый POST на `/api/lead` 2026-05-04 → `{"success":true,"tranid":"arcfit-next-1777889833881-wm4y7w"}` (заявка дошла в 1C.Fitness CRM → Bitrix24 sport-vsegda → email уведомления).
 
 ### Опциональные (для живого расписания вместо fallback)
 
