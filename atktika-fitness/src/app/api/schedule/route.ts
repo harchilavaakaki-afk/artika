@@ -41,8 +41,8 @@ const FALLBACK_SCHEDULE: ScheduleEntry[] = [
   { id: "thu-3", name: "Рельефное тело", time: "19:00", endTime: "19:55", trainer: "Александр Флотский", hall: "Средний зал", duration: "55 мин", date: "2026-05-07", dayOfWeek: 3, category: "power" },
   { id: "thu-4", name: "Хатха-йога", time: "19:00", endTime: "20:30", trainer: "Елена Шарикова", hall: "Большой зал", duration: "90 мин", date: "2026-05-07", dayOfWeek: 3, category: "soft" },
   // Пятница 8 мая
-  { id: "fri-1", name: "Фитнес Микс", time: "09:00", endTime: "09:55", trainer: "Екатерина Хлебникова", hall: "Средний зал", duration: "55 мин", date: "2026-05-08", dayOfWeek: 4, category: "power" },
-  { id: "fri-2", name: "Суставная гимнастика", time: "10:00", endTime: "10:55", trainer: "Екатерина Хлебникова", hall: "Средний зал", duration: "55 мин", date: "2026-05-08", dayOfWeek: 4, category: "soft" },
+  { id: "fri-1", name: "Фитнес Микс", time: "09:00", endTime: "09:55", trainer: "Екатерина Хлебтикова", hall: "Средний зал", duration: "55 мин", date: "2026-05-08", dayOfWeek: 4, category: "power" },
+  { id: "fri-2", name: "Суставная гимнастика", time: "10:00", endTime: "10:55", trainer: "Екатерина Хлебтикова", hall: "Средний зал", duration: "55 мин", date: "2026-05-08", dayOfWeek: 4, category: "soft" },
   { id: "fri-3", name: "Суставная гимнастика", time: "19:00", endTime: "19:55", trainer: "Эльвина Ларионова", hall: "Средний зал", duration: "55 мин", date: "2026-05-08", dayOfWeek: 4, category: "soft" },
   { id: "fri-4", name: "Функциональная тренировка", time: "20:00", endTime: "20:55", trainer: "Елена Сергеева", hall: "Средний зал", duration: "55 мин", date: "2026-05-08", dayOfWeek: 4, category: "power" },
   // Суббота 9 мая — выходной

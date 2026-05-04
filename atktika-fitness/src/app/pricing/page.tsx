@@ -43,7 +43,7 @@ const plans = [
     name: "Разовое посещение",
     time: "В часы работы клуба",
     popular: false,
-    options: [{ period: "1 визит", price: "Уточнить" }],
+    options: [{ period: "1 визит", price: "550 ₽" }],
   },
 ];
 
