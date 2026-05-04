@@ -25,8 +25,9 @@ const plans = [
     time: "7:00–17:00",
     popular: false,
     options: [
-      { period: "Год", price: "Уточнить" },
-      { period: "6 месяцев", price: "Уточнить" },
+      { period: "12 месяцев", price: "13 000 ₽" },
+      { period: "6 месяцев", price: "10 000 ₽" },
+      { period: "Месяц", price: "4 000 ₽" },
     ],
   },
   {
@@ -34,16 +35,16 @@ const plans = [
     time: "7:00–22:00",
     popular: true,
     options: [
-      { period: "Год", price: "Уточнить" },
-      { period: "6 месяцев", price: "Уточнить" },
-      { period: "Месяц", price: "Уточнить" },
+      { period: "12 месяцев", price: "18 000 ₽" },
+      { period: "6 месяцев", price: "13 000 ₽" },
+      { period: "Месяц", price: "4 000 ₽" },
     ],
   },
   {
     name: "Разовое посещение",
     time: "В часы работы клуба",
     popular: false,
-    options: [{ period: "1 визит", price: "550 ₽" }],
+    options: [{ period: "1 визит", price: "1 300 ₽" }],
   },
 ];
 
@@ -66,7 +67,11 @@ const faq = [
   },
   {
     q: "Как оплатить абонемент?",
-    a: "Оплата наличными или картой на ресепшене фитнес-студии Арктика.",
+    a: "Оплата наличными или картой на ресепшене фитнес-клуба Арктика.",
+  },
+  {
+    q: "Что если я потеряю клубную карту?",
+    a: "Восстановление карты при утере — 300 ₽.",
   },
 ];
 
@@ -84,12 +89,21 @@ export default function PricingPage() {
       addressCountry: "RU",
     },
     telephone: SITE.phone,
-    makesOffer: plans.map((plan) => ({
-      "@type": "Offer",
-      name: plan.name,
-      description: `${plan.name} (${plan.time})`,
-      availability: "https://schema.org/InStock",
-    })),
+    makesOffer: plans.flatMap((plan) =>
+      plan.options.map((opt) => {
+        const priceNum = parseInt(opt.price.replace(/\D/g, ""), 10);
+        return {
+          "@type": "Offer",
+          name: `${plan.name} — ${opt.period}`,
+          description: `${plan.name} (${plan.time}), ${opt.period}`,
+          ...(priceNum > 0 && {
+            price: priceNum,
+            priceCurrency: "RUB",
+          }),
+          availability: "https://schema.org/InStock",
+        };
+      }),
+    ),
   };
 
   const faqSchema = {
@@ -154,7 +168,7 @@ export default function PricingPage() {
                   >
                     <span className="text-gray-300">{opt.period}</span>
                     <span className="text-white font-semibold">
-                      {opt.price === "Уточнить" ? "—" : opt.price}
+                      {opt.price}
                     </span>
                   </div>
                 ))}
@@ -168,7 +182,7 @@ export default function PricingPage() {
                     : "bg-dark-600 hover:bg-dark-500 text-white"
                 }`}
               >
-                Уточнить цену
+                Записаться
               </a>
             </div>
           ))}
