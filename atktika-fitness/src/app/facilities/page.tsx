@@ -5,7 +5,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { FACILITIES, SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Зоны клуба — тренажёрный зал и групповые залы в Видном | Арктика",
+  title: "Зоны клуба — тренажёрный зал и групповые залы в Видном",
   description:
     "Тренажёрный зал, кардиозона, залы для групповых занятий, вело-зал в фитнес-клубе Арктика, Видное (Зелёный пер., 10). 6 зон для тренировок, современное оборудование.",
   alternates: { canonical: `${SITE.url}/facilities` },

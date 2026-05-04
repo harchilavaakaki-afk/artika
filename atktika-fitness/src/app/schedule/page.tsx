@@ -3,7 +3,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ScheduleView from "@/components/sections/ScheduleView";
 
 export const metadata: Metadata = {
-  title: "Расписание фитнес-клуба Арктика в Видном — групповые занятия",
+  title: "Расписание — групповые занятия в Видном",
   description:
     "Расписание занятий фитнес-клуба Арктика в Видном (Зелёный пер., 10): йога, пилатес, стретчинг, функциональный тренинг, силовые. Запись онлайн на актуальную неделю.",
   openGraph: {

@@ -5,7 +5,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { TRAINERS } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Тренеры фитнес-клуба Арктика в Видном — 9 инструкторов",
+  title: "Тренеры в Видном — 9 фитнес-инструкторов",
   description:
     "9 фитнес-тренеров в Видном (фитнес-клуб Арктика, Зелёный пер., 10): инструкторы по йоге, пилатесу, силовым и групповым программам. Персональные и групповые тренировки.",
   openGraph: {

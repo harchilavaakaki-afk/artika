@@ -4,7 +4,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Фитнес Видное цены — абонементы фитнес-клуба Арктика",
+  title: "Фитнес Видное — цены и абонементы",
   description:
     "Цены и абонементы фитнес-клуба Арктика в Видном (Зелёный пер., 10): дневные и безлимитные карты, разовое посещение. Тренажёрный зал и 20+ групповых занятий включены.",
   alternates: { canonical: `${SITE.url}/pricing` },

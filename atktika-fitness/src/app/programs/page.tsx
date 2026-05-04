@@ -3,7 +3,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ProgramsGrid from "@/components/sections/ProgramsGrid";
 
 export const metadata: Metadata = {
-  title: "Групповые занятия в Видном — 20+ направлений | Фитнес-клуб Арктика",
+  title: "Групповые занятия в Видном — 20+ направлений",
   description:
     "Групповые занятия в фитнес-клубе Арктика, Видное: йога, пилатес, стретчинг, функциональный тренинг, силовые, танцы, сайкл. 20+ направлений, расписание 7:00–22:00.",
   openGraph: {
