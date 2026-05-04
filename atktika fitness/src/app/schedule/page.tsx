@@ -26,8 +26,11 @@ export default function SchedulePage() {
         <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold">
           Расписание <span className="text-accent">занятий</span>
         </h1>
-        <p className="mt-4 text-gray-400 text-lg max-w-xl mx-auto">
-          Актуальное расписание групповых программ. Выберите день и запишитесь
+        <p className="mt-3 text-accent font-semibold text-base sm:text-lg">
+          Неделя 4 — 10 мая 2026
+        </p>
+        <p className="mt-3 text-gray-400 text-lg max-w-xl mx-auto">
+          Групповые программы фитнес-студии Арктика. Выберите день и запишитесь
           онлайн.
         </p>
       </div>
