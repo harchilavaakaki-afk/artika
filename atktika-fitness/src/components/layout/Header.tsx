@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/constants";
+import { reachGoal } from "@/lib/metrika";
 
 const NAV_LINKS = [
   { href: "/programs", label: "Направления" },
@@ -82,6 +83,7 @@ export default function Header() {
         >
           <a
             href={`tel:${SITE.phoneSales.replace(/\s/g, "")}`}
+            onClick={() => reachGoal("phone_click", { source: "header_mobile_menu" })}
             className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
           >
             <svg
@@ -168,6 +170,7 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-4">
             <a
               href={`tel:${SITE.phoneSales.replace(/\s/g, "")}`}
+              onClick={() => reachGoal("phone_click", { source: "header_desktop" })}
               className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
             >
               <svg
@@ -197,6 +200,7 @@ export default function Header() {
           <div className="flex lg:hidden items-center gap-2">
             <a
               href={`tel:${SITE.phoneSales.replace(/\s/g, "")}`}
+              onClick={() => reachGoal("phone_click", { source: "header_mobile_icon" })}
               className="relative z-50 flex h-10 w-10 items-center justify-center text-gray-400 hover:text-white transition-colors"
               aria-label="Позвонить"
             >

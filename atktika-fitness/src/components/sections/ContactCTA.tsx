@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { motion, type Variants } from "framer-motion";
+import { reachGoal } from "@/lib/metrika";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -52,6 +53,7 @@ export default function ContactCTA() {
 
       if (res.ok) {
         setStatus("success");
+        reachGoal("form_send", { source: "ContactCTA" });
         setName("");
         setPhone("");
       } else {
