@@ -4,6 +4,7 @@ import Link from "next/link";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import { SITE, TRAINERS } from "@/lib/constants";
 import { getPostBySlug, getPostSlugs } from "@/lib/blog";
 
@@ -57,6 +58,11 @@ export default async function BlogPostPage({ params }: Props) {
     description: post.meta.description,
     datePublished: post.meta.date,
     dateModified: post.meta.updatedDate || post.meta.date,
+    image: post.meta.image
+      ? post.meta.image.startsWith("http")
+        ? post.meta.image
+        : `${SITE.url}${post.meta.image}`
+      : `${SITE.url}/images/hero/hero-main.jpg`,
     author: trainer
       ? {
           "@type": "Person",
@@ -68,12 +74,24 @@ export default async function BlogPostPage({ params }: Props) {
       "@type": "Organization",
       name: SITE.name,
       url: SITE.url,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE.url}/icons/logo.svg`,
+      },
     },
     mainEntityOfPage: `${SITE.url}/blog/${slug}`,
+    isAccessibleForFree: true,
+    inLanguage: "ru-RU",
   };
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Блог", href: "/blog" },
+          { name: post.meta.title, href: `/blog/${slug}` },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}

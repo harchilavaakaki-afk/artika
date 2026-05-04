@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import { TRAINERS, PROGRAMS, SITE } from "@/lib/constants";
 import { TRAINER_CONTENT } from "@/lib/trainer-content";
 
@@ -67,6 +68,12 @@ export default async function TrainerPage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Тренеры", href: "/trainers" },
+          { name: trainer.name, href: `/trainers/${slug}` },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

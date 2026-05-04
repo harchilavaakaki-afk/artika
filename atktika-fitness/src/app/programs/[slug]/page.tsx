@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import { PROGRAMS, TRAINERS, CATEGORY_LABELS, SITE } from "@/lib/constants";
 import { PROGRAM_CONTENT } from "@/lib/program-content";
 
@@ -71,6 +72,34 @@ export default async function ProgramPage({ params }: Props) {
     image: `${SITE.url}/images/programs/${slug}.jpg`,
   };
 
+  /* Schema.org: Service — конкретная услуга «программа в Видном» */
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: `${program.name} в Видном`,
+    serviceType: program.name,
+    description: program.metaDescription,
+    provider: {
+      "@type": "SportsActivityLocation",
+      name: SITE.name,
+      url: SITE.url,
+      telephone: SITE.phone,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Зелёный переулок, 10",
+        addressLocality: "Видное",
+        addressRegion: "Московская область",
+        addressCountry: "RU",
+      },
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Видное",
+    },
+    url: `${SITE.url}/programs/${slug}`,
+    image: `${SITE.url}/images/programs/${slug}.jpg`,
+  };
+
   /* Schema.org: FAQPage */
   const faqSchema = content
     ? {
@@ -102,9 +131,19 @@ export default async function ProgramPage({ params }: Props) {
   return (
     <>
       {/* Schema.org */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Направления", href: "/programs" },
+          { name: program.name, href: `/programs/${slug}` },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(sportsSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
       {faqSchema && (
         <script

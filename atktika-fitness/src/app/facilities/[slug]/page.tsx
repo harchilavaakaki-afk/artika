@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import { FACILITIES, PROGRAMS, SITE } from "@/lib/constants";
 import { FACILITY_CONTENT } from "@/lib/facility-content";
 
@@ -66,6 +67,12 @@ export default async function FacilityPage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Зоны клуба", href: "/facilities" },
+          { name: facility.name, href: `/facilities/${slug}` },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(placeSchema) }}
