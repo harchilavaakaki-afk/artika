@@ -67,3 +67,6 @@ dashboard_metrika_march2026.html
 *.psd
 *.tif
 *.tiff
+
+# Exceptions: ship Next.js public assets (small mp4 hero etc)
+!atktika-fitness/public/**/*.mp4

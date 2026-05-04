@@ -124,15 +124,46 @@ export default async function ProgramPage({ params }: Props) {
 
         {/* Hero */}
         <section className="relative rounded-2xl overflow-hidden mt-4 mb-12">
-          <div className="relative aspect-[21/9] sm:aspect-[3/1]">
-            <Image
-              src={`/images/programs/${slug}.jpg`}
-              alt={`${program.name} — занятие в фитнес-студии Арктика, Видное`}
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-            />
+          <div
+            className={`relative ${
+              slug === "fitball"
+                ? "aspect-[4/3] sm:aspect-[16/9]"
+                : "aspect-[21/9] sm:aspect-[3/1]"
+            }`}
+          >
+            {slug === "lady-style" ? (
+              <video
+                src="/videos/lady-style.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover"
+                aria-label={`${program.name} — занятие в фитнес-студии Арктика, Видное`}
+              />
+            ) : slug === "fitball" ? (
+              <video
+                src="/videos/fitball.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: "center 40%" }}
+                aria-label={`${program.name} — занятие в фитнес-студии Арктика, Видное`}
+              />
+            ) : (
+              <Image
+                src={`/images/programs/${slug}.jpg`}
+                alt={`${program.name} — занятие в фитнес-студии Арктика, Видное`}
+                fill
+                priority
+                className="object-cover"
+                sizes="100vw"
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-dark-800 via-dark-800/40 to-transparent" />
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">

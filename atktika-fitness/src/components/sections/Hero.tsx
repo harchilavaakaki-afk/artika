@@ -59,11 +59,14 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative h-[100svh] min-h-[600px] flex flex-col pt-20 lg:flex-row lg:items-center lg:pt-0 overflow-hidden"
+      className="relative lg:h-[100svh] lg:min-h-[600px] flex flex-col pt-24 pb-16 lg:pb-0 lg:flex-row lg:items-center lg:pt-0"
     >
-      {/* Video background — oversized wrapper so moving bg never shows gap */}
-      <div className="absolute -inset-[100px] z-0">
-        <motion.div className="absolute inset-0 hidden lg:block" style={{ y: bgY }}>
+      {/* Video background — clipped to section bounds */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.div
+          className="absolute -inset-[100px] hidden lg:block"
+          style={{ y: bgY }}
+        >
           <video
             autoPlay
             muted
@@ -91,27 +94,9 @@ export default function Hero() {
       <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/90 via-black/65 to-black/30" />
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-dark-800 via-transparent to-transparent" />
 
-      {/* Girl overlay — mobile/tablet only, positioned against section */}
-      {/* Girl — mobile/tablet: large, behind content, bottom-right */}
-      <motion.div
-        className="lg:hidden absolute right-0 bottom-0 pointer-events-none z-[5] h-[72%]"
-        initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-      >
-        <Image
-          src="/images/hero/hero-girl.png"
-          alt="Девушка с гантелями"
-          width={400}
-          height={700}
-          className="h-full w-auto object-contain object-bottom"
-          priority
-        />
-      </motion.div>
-
       {/* Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col lg:block lg:flex-none lg:my-auto">
-        <div className="relative flex flex-col flex-1 lg:flex-none lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:block lg:my-auto">
+        <div className="relative flex flex-col gap-6 lg:gap-0 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
 
           {/* Left: text */}
           <div className="relative z-10 max-w-[90%] sm:max-w-[80%] lg:max-w-none">
@@ -165,9 +150,35 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Stats — mobile: pushed to bottom */}
+          {/* Mobile-only video — centered between buttons and stats */}
           <motion.div
-            className="relative z-10 lg:hidden mt-auto pt-8 flex gap-10"
+            className="lg:hidden mx-auto w-full max-w-[280px] aspect-square rounded-[1.5rem] overflow-hidden relative"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <video
+              src="/videos/hero-girl.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="h-full w-full object-cover"
+              aria-label="Тренировка в фитнес-студии Арктика"
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse 75% 85% at 50% 50%, transparent 35%, #111111 100%)",
+              }}
+            />
+          </motion.div>
+
+          {/* Stats — mobile */}
+          <motion.div
+            className="relative z-10 lg:hidden flex gap-8 sm:gap-10 flex-wrap"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.5 }}
@@ -199,31 +210,45 @@ export default function Hero() {
             ))}
           </motion.div>
 
-          {/* Right: girl — desktop only */}
+          {/* Right: girl video — desktop only */}
           <motion.div
             className="hidden lg:flex relative h-[80vh] max-h-[700px] items-end justify-center row-span-2 col-start-2 row-start-1"
             style={{ y: photoY }}
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 1.2, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-accent/15 rounded-full blur-[80px] pointer-events-none" />
-            <Image
-              src="/images/hero/hero-girl.png"
-              alt="Девушка с гантелями — фитнес-студия Арктика"
-              width={400}
-              height={600}
-              className="relative z-[1] h-full w-auto object-contain object-bottom drop-shadow-2xl"
-              priority
-            />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-dark-800 via-dark-800/60 to-transparent z-[2] pointer-events-none" />
+            {/* Soft accent glow behind */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-accent/20 rounded-full blur-[100px] pointer-events-none" />
+
+            {/* Video — rounded corners, vignette on all sides */}
+            <div className="relative z-[1] h-full w-full overflow-hidden rounded-[2.5rem]">
+              <video
+                src="/videos/hero-girl.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover object-bottom"
+                aria-label="Тренировка в фитнес-студии Арктика"
+              />
+              {/* Vignette darkening on all edges → seamless blend with dark-800 */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 65% 80% at 50% 55%, transparent 25%, #111111 95%)",
+                }}
+              />
+            </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — desktop only */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        className="hidden lg:block absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
       >

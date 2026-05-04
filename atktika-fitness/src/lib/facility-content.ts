@@ -78,7 +78,7 @@ export const FACILITY_CONTENT: Record<string, FacilityContent> = {
       "Оборудование для групповых программ",
       "Качественное напольное покрытие",
     ],
-    programs: ["legs", "glutes", "lady-style", "mobility"],
+    programs: ["fitness-mix", "glutes", "lady-style", "mobility"],
     tips: [
       "Здесь проходят мастер-классы и марафоны",
       "Следите за расписанием специальных мероприятий",

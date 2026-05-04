@@ -9,16 +9,24 @@ import "swiper/css";
 
 const PHOTOS = [
   { src: "/images/gallery/group-class-trainer.jpg", alt: "Групповое занятие — тренер Арктика Фитнес" },
-  { src: "/images/gallery/gym-training-1.jpg", alt: "Тренировка в тренажёрном зале Арктика" },
+  { src: "/images/gallery/functional-lunges.jpg", alt: "Функциональная тренировка со штангой — Арктика" },
+  { src: "/images/gallery/silovaya-kettlebell.jpg", alt: "Сила+ — тренировка с гирей, Арктика" },
   { src: "/images/gallery/group-class-squats.jpg", alt: "Групповое занятие — приседания, Арктика" },
-  { src: "/images/gallery/gym-dumbbells.jpg", alt: "Гантельный ряд — тренажёрный зал Арктика" },
+  { src: "/images/gallery/cycling-class.jpg", alt: "Огненный велик — сайкл-тренировка Арктика" },
+  { src: "/images/gallery/plank-class.jpg", alt: "Пилатес — планка в фитнес-студии Арктика" },
   { src: "/images/gallery/group-class-stretch.jpg", alt: "Стретчинг — групповое занятие Арктика" },
-  { src: "/images/gallery/gym-training-2.jpg", alt: "Тренировка на тренажёре, Арктика Видное" },
+  { src: "/images/gallery/weight-class.jpg", alt: "Силовая с блином в групповом зале — Арктика" },
   { src: "/images/gallery/personal-training.jpg", alt: "Персональная тренировка — тренер и клиент" },
+  { src: "/images/gallery/lady-style-portrait.jpg", alt: "Леди Стиль — танцевальное направление Арктика" },
+  { src: "/images/gallery/yoga-asanas.jpg", alt: "Йога — асаны в фитнес-студии Арктика" },
+  { src: "/images/gallery/interval-class.jpg", alt: "Интервальная тренировка — групповое занятие Арктика" },
   { src: "/images/gallery/cardio-zone.jpg", alt: "Кардио зона — беговые дорожки Арктика" },
   { src: "/images/gallery/yoga-class.jpg", alt: "Йога — занятие в Арктика Фитнес, Видное" },
+  { src: "/images/gallery/stretching-back.jpg", alt: "Стретчинг — растяжка спины в Арктика" },
   { src: "/images/gallery/gym-training-3.jpg", alt: "Силовая тренировка — Арктика Фитнес" },
   { src: "/images/gallery/kids-class.jpg", alt: "Детская секция — занятие в Арктика Фитнес" },
+  { src: "/images/gallery/gym-training-1.jpg", alt: "Тренировка в тренажёрном зале Арктика" },
+  { src: "/images/gallery/gym-training-2.jpg", alt: "Тренировка на тренажёре, Арктика Видное" },
   { src: "/images/gallery/gym-training-4.jpg", alt: "Тренировка в зале Арктика, Видное" },
 ];
 

@@ -85,21 +85,46 @@ export default function ProgramsGrid() {
         key={active}
       >
         <AnimatePresence mode="popLayout">
-          {filtered.map((program) => (
+          {filtered.map((program, i) => (
             <motion.div key={program.slug} variants={card} layout>
               <Link
                 href={`/programs/${program.slug}`}
                 className="group block bg-dark-700 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-accent/10"
               >
-                {/* Image */}
+                {/* Image / Video */}
                 <div className="relative aspect-video overflow-hidden">
-                  <Image
-                    src={`/images/programs/${program.slug}.jpg`}
-                    alt={`${program.name} — групповое занятие в фитнес-студии Арктика, Видное`}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
+                  {program.slug === "lady-style" ? (
+                    <video
+                      src="/videos/lady-style.mp4"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110`}
+                      aria-label={`${program.name} — занятие в фитнес-студии Арктика, Видное`}
+                    />
+                  ) : program.slug === "fitball" ? (
+                    <video
+                      src="/videos/fitball.mp4"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110`}
+                      style={{ objectPosition: "center 40%" }}
+                      aria-label={`${program.name} — занятие в фитнес-студии Арктика, Видное`}
+                    />
+                  ) : (
+                    <Image
+                      src={`/images/programs/${program.slug}.jpg`}
+                      alt={`${program.name} — групповое занятие в фитнес-студии Арктика, Видное`}
+                      fill
+                      className={`object-cover transition-all duration-500 group-hover:scale-110`}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-700 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <span className="bg-accent text-white text-sm font-medium px-5 py-2.5 rounded-full shadow-lg">

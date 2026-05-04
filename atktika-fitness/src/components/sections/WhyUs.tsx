@@ -100,8 +100,8 @@ export default function WhyUs() {
           className="relative overflow-hidden rounded-3xl min-h-[280px] md:col-span-2 lg:col-span-2 lg:row-span-2 group cursor-default"
         >
           <Image
-            src="/images/gallery/group-class-squats.jpg"
-            alt="Групповое занятие в фитнес-студии Арктика, Видное"
+            src="/images/programs/interval.jpg"
+            alt="Тренер на групповом занятии — фитнес-студия Арктика, Видное"
             fill
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 66vw"

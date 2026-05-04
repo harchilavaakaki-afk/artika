@@ -53,7 +53,7 @@ export const PROGRAMS: Program[] = [
       "Классическая йога: асаны, пранаяма, медитация. Для любого уровня.",
     duration: "90 минут",
     intensity: "средняя",
-    trainers: ["zharikova"],
+    trainers: ["zharikova", "sharikova"],
     metaTitle: "Хатха-йога в Видном | Арктика Фитнес",
     metaDescription:
       "Хатха-йога в Видном — 90-минутные занятия для тела и ума. Фитнес-студия Арктика.",
@@ -66,7 +66,7 @@ export const PROGRAMS: Program[] = [
       "Упражнения на растяжку для гибкости и здоровья суставов.",
     duration: "55 минут",
     intensity: "низкая",
-    trainers: ["sharikova", "larionova"],
+    trainers: ["larionova"],
     metaTitle: "Стретчинг в Видном — занятия растяжкой | Арктика Фитнес",
     metaDescription:
       "Стретчинг в Видном — растяжка для всех уровней. Гибкость и здоровье. Фитнес-студия Арктика.",
@@ -105,7 +105,7 @@ export const PROGRAMS: Program[] = [
       "Упражнения для укрепления спины и профилактики болей.",
     duration: "55 минут",
     intensity: "низкая",
-    trainers: ["zharikova"],
+    trainers: ["lazareva"],
     metaTitle: "Здоровая спина в Видном | Арктика Фитнес",
     metaDescription:
       "Занятия для здоровой спины в Видном — профилактика болей, укрепление мышц. Арктика Фитнес.",
@@ -128,10 +128,10 @@ export const PROGRAMS: Program[] = [
     name: "Функциональная тренировка",
     category: "power",
     shortDescription:
-      "Комплексная тренировка на все группы мышц с собственным весом и оборудованием.",
+      "Комплексная тренировка на все группы мышц. Средний и высокий уровень, не для новичков.",
     duration: "55 минут",
     intensity: "высокая",
-    trainers: ["lazareva", "flotskiy"],
+    trainers: ["sergeeva"],
     metaTitle:
       "Функциональная тренировка в Видном | Арктика Фитнес",
     metaDescription:
@@ -158,23 +158,23 @@ export const PROGRAMS: Program[] = [
       "Силовая тренировка для всех групп мышц с отягощениями.",
     duration: "55 минут",
     intensity: "высокая",
-    trainers: ["flotskiy", "gorbachev"],
+    trainers: ["lazareva"],
     metaTitle: "Сила+ — силовая тренировка в Видном | Арктика Фитнес",
     metaDescription:
       "Силовые тренировки в Видном — набор массы и рельеф. Фитнес-студия Арктика.",
   },
   {
-    slug: "legs",
-    name: "Сильные ноги + пресс",
+    slug: "fitness-mix",
+    name: "Фитнес Микс",
     category: "power",
     shortDescription:
-      "Целенаправленная проработка ног и мышц пресса.",
+      "Кардио, силовая и стретчинг в одной тренировке. Все мышцы за 55 минут.",
     duration: "55 минут",
-    intensity: "высокая",
+    intensity: "средняя",
     trainers: ["khlebnikova"],
-    metaTitle: "Сильные ноги + пресс в Видном | Арктика Фитнес",
+    metaTitle: "Фитнес Микс в Видном | Арктика Фитнес",
     metaDescription:
-      "Тренировка ног и пресса в Видном — рельефные мышцы. Фитнес-студия Арктика.",
+      "Фитнес Микс в Видном — кардио + силовая + стретчинг. Фитнес-студия Арктика.",
   },
   {
     slug: "glutes",
@@ -184,7 +184,7 @@ export const PROGRAMS: Program[] = [
       "Специализированная тренировка для ягодичных мышц.",
     duration: "55 минут",
     intensity: "средняя",
-    trainers: ["lazareva", "khlebnikova"],
+    trainers: ["lazareva"],
     metaTitle: "Ягодицы ПРО в Видном | Арктика Фитнес",
     metaDescription:
       "Тренировка ягодиц в Видном — подтянутые формы. Фитнес-студия Арктика.",
@@ -210,7 +210,7 @@ export const PROGRAMS: Program[] = [
       "Интенсивная кардио-тренировка на велотренажёрах под музыку.",
     duration: "45 минут",
     intensity: "высокая",
-    trainers: ["lazareva"],
+    trainers: ["sergeeva"],
     metaTitle: "Сайкл-тренировки в Видном | Арктика Фитнес",
     metaDescription:
       "Сайкл (велотренажёр) в Видном — кардио под музыку. Фитнес-студия Арктика.",
@@ -223,7 +223,7 @@ export const PROGRAMS: Program[] = [
       "Танцевальное направление для женщин. Грация, пластика, уверенность.",
     duration: "55 минут",
     intensity: "средняя",
-    trainers: ["flotskiy"],
+    trainers: ["lazareva"],
     metaTitle: "Леди Стиль — танцы в Видном | Арктика Фитнес",
     metaDescription:
       "Танцы Леди Стиль в Видном — грация и пластика. Фитнес-студия Арктика.",
@@ -248,7 +248,7 @@ export const TRAINERS: Trainer[] = [
     name: "Екатерина Лазарева",
     role: "Инструктор групповых программ. Персональный тренер.",
     specializations: ["Групповые программы", "Персональные тренировки"],
-    programs: ["interval", "functional", "glutes", "cycling"],
+    programs: ["back-health", "power-plus", "glutes", "interval", "lady-style"],
     metaTitle:
       "Екатерина Лазарева — тренер | Арктика Фитнес, Видное",
     metaDescription:
@@ -263,7 +263,7 @@ export const TRAINERS: Trainer[] = [
       "Персональные тренировки",
       "Сальса",
     ],
-    programs: ["power-plus", "functional", "body-sculpt", "lady-style"],
+    programs: ["body-sculpt"],
     metaTitle:
       "Александр Флотский — тренер | Арктика Фитнес, Видное",
     metaDescription:
@@ -274,7 +274,7 @@ export const TRAINERS: Trainer[] = [
     name: "Михаил Горбачев",
     role: "Инструктор тренажёрного зала. Персональный тренер.",
     specializations: ["Тренажёрный зал", "Персональные тренировки"],
-    programs: ["power-plus"],
+    programs: [],
     metaTitle:
       "Михаил Горбачев — тренер | Арктика Фитнес, Видное",
     metaDescription:
@@ -295,7 +295,7 @@ export const TRAINERS: Trainer[] = [
     name: "Наталия Жарикова",
     role: "Инструктор групповых программ. Инструктор по йоге.",
     specializations: ["Йога", "Групповые программы"],
-    programs: ["yoga", "hatha-yoga", "back-health"],
+    programs: ["yoga", "hatha-yoga"],
     metaTitle:
       "Наталия Жарикова — тренер по йоге | Арктика Фитнес, Видное",
     metaDescription:
@@ -306,7 +306,7 @@ export const TRAINERS: Trainer[] = [
     name: "Елена Шарикова",
     role: "Инструктор групповых программ. Тренер тренажёрного зала.",
     specializations: ["Групповые программы", "Тренажёрный зал"],
-    programs: ["stretching", "pilates", "fitball"],
+    programs: ["hatha-yoga", "pilates", "fitball"],
     metaTitle:
       "Елена Шарикова — тренер | Арктика Фитнес, Видное",
     metaDescription:
@@ -314,24 +314,24 @@ export const TRAINERS: Trainer[] = [
   },
   {
     slug: "khlebnikova",
-    name: "Екатерина Хлебникова",
+    name: "Екатерина Хлебтикова",
     role: "Тренер групповых программ. Организатор спортивных мероприятий.",
     specializations: [
       "Групповые программы",
       "Спортивные мероприятия",
     ],
-    programs: ["legs", "glutes", "mobility"],
+    programs: ["fitness-mix", "mobility"],
     metaTitle:
-      "Екатерина Хлебникова — тренер | Арктика Фитнес, Видное",
+      "Екатерина Хлебтикова — тренер | Арктика Фитнес, Видное",
     metaDescription:
-      "Екатерина Хлебникова — тренер групповых программ в фитнес-студии Арктика, Видное.",
+      "Екатерина Хлебтикова — тренер групповых программ в фитнес-студии Арктика, Видное.",
   },
   {
     slug: "sergeeva",
     name: "Елена Сергеева",
     role: "Инструктор тренажёрного зала. Персональный тренер.",
     specializations: ["Тренажёрный зал", "Персональные тренировки"],
-    programs: [],
+    programs: ["functional", "cycling"],
     metaTitle:
       "Елена Сергеева — тренер | Арктика Фитнес, Видное",
     metaDescription:

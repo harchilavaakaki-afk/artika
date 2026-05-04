@@ -16,39 +16,40 @@ export interface ScheduleEntry {
 
 const HALLS = ["Средний зал", "Большой зал", "Вело-зал"];
 
-// Источник: PDF «Расписание 4 мая – 10 мая 2026», Арктика Фитнес, Зелёный пер. 10
+// Расписание на неделю 27 апреля – 3 мая 2026 (источник: PDF от 27.04.2026)
 const FALLBACK_SCHEDULE: ScheduleEntry[] = [
-  // Понедельник
-  { id: "mon-1", name: "Сила+", time: "09:00", endTime: "09:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 0, category: "power" },
-  { id: "mon-2", name: "Здоровая спина", time: "10:00", endTime: "10:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 0, category: "soft" },
-  { id: "mon-3", name: "Сила+", time: "19:00", endTime: "19:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 0, category: "power" },
-  { id: "mon-4", name: "Здоровая спина", time: "20:00", endTime: "20:55", trainer: "Екатерина Лазарева", hall: "Большой зал", duration: "55 мин", date: "", dayOfWeek: 0, category: "soft" },
-  { id: "mon-5", name: "Функциональная тренировка", time: "20:00", endTime: "20:55", trainer: "Елена Сергеева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 0, category: "power" },
-  // Вторник
-  { id: "tue-1", name: "Руки + пресс", time: "09:00", endTime: "09:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 1, category: "power" },
-  { id: "tue-2", name: "Йога для начинающих", time: "10:30", endTime: "11:25", trainer: "Елена Шарикова", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 1, category: "soft" },
-  { id: "tue-3", name: "Пилатес", time: "19:00", endTime: "19:55", trainer: "Елена Шарикова", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 1, category: "soft" },
-  { id: "tue-4", name: "Хатха-йога", time: "20:00", endTime: "21:30", trainer: "Елена Шарикова", hall: "Средний зал", duration: "90 мин", date: "", dayOfWeek: 1, category: "soft" },
-  // Среда
-  { id: "wed-1", name: "Ягодицы ПРО", time: "09:00", endTime: "09:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 2, category: "power" },
-  { id: "wed-2", name: "Мобилити", time: "10:00", endTime: "10:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 2, category: "soft" },
-  { id: "wed-3", name: "Интервальная тренировка", time: "19:00", endTime: "19:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 2, category: "power" },
-  { id: "wed-4", name: "Огненный велик", time: "20:00", endTime: "20:55", trainer: "Елена Сергеева", hall: "Вело-зал", duration: "55 мин", date: "", dayOfWeek: 2, category: "power" },
-  { id: "wed-5", name: "Леди Стиль", time: "20:15", endTime: "21:10", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 2, category: "dance" },
-  // Четверг
-  { id: "thu-1", name: "Пилатес", time: "09:00", endTime: "09:55", trainer: "Эльвина Ларионова", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 3, category: "soft" },
-  { id: "thu-2", name: "Стретчинг", time: "10:00", endTime: "10:55", trainer: "Эльвина Ларионова", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 3, category: "soft" },
-  { id: "thu-3", name: "Рельефное тело", time: "19:00", endTime: "19:55", trainer: "Александр Флотский", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 3, category: "power" },
-  { id: "thu-4", name: "Хатха-йога", time: "19:00", endTime: "20:30", trainer: "Елена Шарикова", hall: "Большой зал", duration: "90 мин", date: "", dayOfWeek: 3, category: "soft" },
-  // Пятница
-  { id: "fri-1", name: "Фитнес Микс", time: "09:00", endTime: "09:55", trainer: "Екатерина Хлебникова", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 4, category: "power" },
-  { id: "fri-2", name: "Суставная гимнастика", time: "10:00", endTime: "10:55", trainer: "Екатерина Хлебникова", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 4, category: "soft" },
-  { id: "fri-3", name: "Суставная гимнастика", time: "19:00", endTime: "19:55", trainer: "Эльвина Ларионова", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 4, category: "soft" },
-  { id: "fri-4", name: "Функциональная тренировка", time: "20:00", endTime: "20:55", trainer: "Елена Сергеева", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 4, category: "power" },
-  // Суббота — выходной
-  // Воскресенье
-  { id: "sun-1", name: "Огненный велик", time: "12:00", endTime: "12:55", trainer: "Елена Сергеева", hall: "Вело-зал", duration: "55 мин", date: "", dayOfWeek: 6, category: "power" },
-  { id: "sun-2", name: "Рельефное тело", time: "15:15", endTime: "16:10", trainer: "Александр Флотский", hall: "Средний зал", duration: "55 мин", date: "", dayOfWeek: 6, category: "power" },
+  // Понедельник 27 апреля
+  { id: "mon-1", name: "Сила+", time: "09:00", endTime: "09:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "2026-04-27", dayOfWeek: 0, category: "power" },
+  { id: "mon-2", name: "Здоровая спина", time: "10:00", endTime: "10:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "2026-04-27", dayOfWeek: 0, category: "soft" },
+  { id: "mon-3", name: "Сила+", time: "19:00", endTime: "19:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "2026-04-27", dayOfWeek: 0, category: "power" },
+  { id: "mon-4", name: "Здоровая спина", time: "20:00", endTime: "20:55", trainer: "Екатерина Лазарева", hall: "Большой зал", duration: "55 мин", date: "2026-04-27", dayOfWeek: 0, category: "soft" },
+  { id: "mon-5", name: "Функциональная тренировка", time: "20:00", endTime: "20:55", trainer: "Елена Сергеева", hall: "Средний зал", duration: "55 мин", date: "2026-04-27", dayOfWeek: 0, category: "power" },
+  // Вторник 28 апреля
+  { id: "tue-1", name: "Руки + пресс", time: "09:00", endTime: "09:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "2026-04-28", dayOfWeek: 1, category: "power" },
+  { id: "tue-2", name: "Йога (для начинающих)", time: "10:30", endTime: "11:25", trainer: "Елена Шарикова", hall: "Средний зал", duration: "55 мин", date: "2026-04-28", dayOfWeek: 1, category: "soft" },
+  { id: "tue-3", name: "Пилатес", time: "19:00", endTime: "19:55", trainer: "Елена Шарикова", hall: "Средний зал", duration: "55 мин", date: "2026-04-28", dayOfWeek: 1, category: "soft" },
+  { id: "tue-4", name: "Хатха-йога", time: "20:00", endTime: "21:30", trainer: "Елена Шарикова", hall: "Средний зал", duration: "90 мин", date: "2026-04-28", dayOfWeek: 1, category: "soft" },
+  // Среда 29 апреля
+  { id: "wed-1", name: "Ягодицы ПРО", time: "09:00", endTime: "09:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "2026-04-29", dayOfWeek: 2, category: "power" },
+  { id: "wed-2", name: "Мобилити", time: "10:00", endTime: "10:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "2026-04-29", dayOfWeek: 2, category: "soft" },
+  { id: "wed-3", name: "Интервальная тренировка", time: "19:00", endTime: "19:55", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "2026-04-29", dayOfWeek: 2, category: "power" },
+  { id: "wed-4", name: "Огненный велик", time: "20:00", endTime: "20:55", trainer: "Елена Сергеева", hall: "Вело-зал", duration: "55 мин", date: "2026-04-29", dayOfWeek: 2, category: "power" },
+  { id: "wed-5", name: "Леди Стиль", time: "20:15", endTime: "21:10", trainer: "Екатерина Лазарева", hall: "Средний зал", duration: "55 мин", date: "2026-04-29", dayOfWeek: 2, category: "dance" },
+  // Четверг 30 апреля
+  { id: "thu-1", name: "Пилатес", time: "09:00", endTime: "09:55", trainer: "Эльвина Ларионова", hall: "Средний зал", duration: "55 мин", date: "2026-04-30", dayOfWeek: 3, category: "soft" },
+  { id: "thu-2", name: "Стретчинг", time: "10:00", endTime: "10:55", trainer: "Эльвина Ларионова", hall: "Средний зал", duration: "55 мин", date: "2026-04-30", dayOfWeek: 3, category: "soft" },
+  { id: "thu-3", name: "Рельефное тело", time: "19:00", endTime: "19:55", trainer: "Александр Флотский", hall: "Средний зал", duration: "55 мин", date: "2026-04-30", dayOfWeek: 3, category: "power" },
+  { id: "thu-4", name: "Хатха-йога", time: "19:00", endTime: "20:30", trainer: "Елена Шарикова", hall: "Большой зал", duration: "90 мин", date: "2026-04-30", dayOfWeek: 3, category: "soft" },
+  // Пятница 1 мая
+  { id: "fri-1", name: "Фитнес Микс", time: "09:00", endTime: "09:55", trainer: "Екатерина Хлебтикова", hall: "Средний зал", duration: "55 мин", date: "2026-05-01", dayOfWeek: 4, category: "power" },
+  { id: "fri-2", name: "Суставная гимнастика", time: "10:00", endTime: "10:55", trainer: "Екатерина Хлебтикова", hall: "Средний зал", duration: "55 мин", date: "2026-05-01", dayOfWeek: 4, category: "soft" },
+  { id: "fri-3", name: "Суставная гимнастика", time: "19:00", endTime: "19:55", trainer: "Эльвина Ларионова", hall: "Средний зал", duration: "55 мин", date: "2026-05-01", dayOfWeek: 4, category: "soft" },
+  { id: "fri-4", name: "Функциональная тренировка", time: "20:00", endTime: "20:55", trainer: "Елена Сергеева", hall: "Средний зал", duration: "55 мин", date: "2026-05-01", dayOfWeek: 4, category: "power" },
+  // Суббота 2 мая
+  { id: "sat-1", name: "Фитнес-мяч", time: "10:00", endTime: "10:55", trainer: "Елена Шарикова", hall: "Средний зал", duration: "55 мин", date: "2026-05-02", dayOfWeek: 5, category: "soft" },
+  { id: "sat-2", name: "Хатха-йога", time: "11:00", endTime: "12:30", trainer: "Елена Шарикова", hall: "Средний зал", duration: "90 мин", date: "2026-05-02", dayOfWeek: 5, category: "soft" },
+  { id: "sat-3", name: "Рельефное тело", time: "15:15", endTime: "16:10", trainer: "Александр Флотский", hall: "Средний зал", duration: "55 мин", date: "2026-05-02", dayOfWeek: 5, category: "power" },
+  // Воскресенье 3 мая — выходной
 ];
 
 export async function GET() {
